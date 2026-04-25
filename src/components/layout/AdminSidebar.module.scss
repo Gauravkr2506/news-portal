@@ -11,12 +11,45 @@
   overflow-y: auto;
   @include scrollbar-thin;
 
-  @include max-md { display: none; }
+  @include max-md {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $z-modal;
+    transform: translateX(-100%);
+    transition: transform $transition-normal;
+    height: 100dvh;
+    box-shadow: $shadow-xl;
+  }
+}
+
+.mobileOpen {
+  @include max-md { transform: translateX(0); }
 }
 
 .header {
   padding: $space-5 $space-5 $space-4;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.closeBtn {
+  display: none;
+  @include max-md { display: flex; }
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: $radius-md;
+  flex-shrink: 0;
+  transition: all $transition-fast;
+  &:hover { background: var(--bg-surface); color: var(--text-primary); }
 }
 
 .logo {

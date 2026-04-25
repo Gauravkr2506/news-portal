@@ -19,3 +19,52 @@
 
   @include max-md { padding: $space-4; }
 }
+
+// ─── Mobile nav ───────────────────────────────────────────────────────────────
+.mobileHeader {
+  display: none;
+  @include max-md {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-3 $space-4;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: $z-sticky;
+  }
+}
+
+.hamburger {
+  @include flex-center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: $radius-md;
+  transition: all $transition-fast;
+  flex-shrink: 0;
+  &:hover { background: var(--bg-surface); color: var(--text-primary); }
+}
+
+.mobileLogo {
+  font-size: $text-base;
+  font-weight: $font-extrabold;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+
+.overlay {
+  display: none;
+  @include max-md {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: $z-overlay;
+  }
+}

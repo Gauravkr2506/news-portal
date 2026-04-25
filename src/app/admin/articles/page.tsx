@@ -81,9 +81,9 @@ export default async function ArticlesPage({ searchParams }: Props) {
             <tr>
               <th>Title</th>
               <th>Category</th>
-              <th>Author</th>
+              <th className={styles.colHideOnMobile}>Author</th>
               <th>Status</th>
-              <th>Views</th>
+              <th className={styles.colHideOnMobile}>Views</th>
               <th>Updated</th>
               <th>Actions</th>
             </tr>
@@ -105,9 +105,9 @@ export default async function ArticlesPage({ searchParams }: Props) {
                     </span>
                   )}
                 </td>
-                <td className={styles.authorCell}>{a.authorName || '—'}</td>
+                <td className={`${styles.authorCell} ${styles.colHideOnMobile}`}>{a.authorName || '—'}</td>
                 <td><span className={`${styles.badge} ${styles[a.status]}`}>{a.status}</span></td>
-                <td>{a.viewCount.toLocaleString()}</td>
+                <td className={styles.colHideOnMobile}>{a.viewCount.toLocaleString()}</td>
                 <td className={styles.dateCell}>{formatDate(a.updatedAt, { month: 'short', day: 'numeric', year: 'numeric' })}</td>
                 <td>
                   <div className={styles.actions}>

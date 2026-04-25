@@ -9,6 +9,8 @@ import type { User } from '@/lib/db/schema'
 
 interface AdminSidebarProps {
   user: Pick<User, 'id' | 'name' | 'email' | 'image' | 'role'>
+  mobileOpen?: boolean
+  onClose?: () => void
 }
 
 const navItems = [
@@ -24,16 +26,25 @@ const ownerItems = [
   { href: '/admin/users', label: 'Users', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> },
 ]
 
-export function AdminSidebar({ user }: AdminSidebarProps) {
+export function AdminSidebar({ user, mobileOpen, onClose }: AdminSidebarProps) {
   const pathname = usePathname()
   const isOwner = user.role === 'owner'
   const initial = user.name?.charAt(0).toUpperCase()
 
   return (
-    <aside className={styles.sidebar} aria-label="Admin navigation">
+    <aside className={`${styles.sidebar} ${mobileOpen ? styles.mobileOpen : ''}`} aria-label="Admin navigation">
       <div className={styles.header}>
-        <Link href="/admin/dashboard" className={styles.logo}>NewsEdition</Link>
-        <span className={styles.adminBadge}>Admin Panel</span>
+        <div>
+          <Link href="/admin/dashboard" className={styles.logo} onClick={onClose}>NewsEdition</Link>
+          <span className={styles.adminBadge}>Admin Panel</span>
+        </div>
+        {onClose && (
+          <button className={styles.closeBtn} onClick={onClose} aria-label="Close menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        )}
       </div>
 
       <div className={styles.user}>
@@ -53,6 +64,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
           <Link
             key={item.href}
             href={item.href}
+            onClick={onClose}
             className={`${styles.link} ${pathname === item.href || (item.href !== '/admin/dashboard' && item.href !== '/admin/articles/new' && pathname.startsWith(item.href)) ? styles.active : ''}`}
           >
             {item.icon}
@@ -67,6 +79,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={onClose}
                 className={`${styles.link} ${pathname.startsWith(item.href) ? styles.active : ''}`}
               >
                 {item.icon}

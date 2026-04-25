@@ -38,6 +38,8 @@
   border: 1px solid var(--border);
   border-radius: $radius-2xl;
   padding: $space-3 $space-4;
+
+  @include max-md { flex-direction: column; align-items: stretch; }
 }
 
 .statusTabs {
@@ -70,7 +72,10 @@
   color: var(--text-primary);
   font-size: $text-sm;
   min-width: 200px;
+  width: 100%;
   transition: border-color $transition-fast;
+
+  @include max-md { min-width: 0; }
 
   &:focus { outline: none; border-color: var(--color-primary); }
   &::placeholder { color: var(--text-muted); }
@@ -110,6 +115,10 @@
 }
 
 .titleCell { min-width: 280px; max-width: 400px; }
+
+.colHideOnMobile {
+  @include max-md { display: none; }
+}
 
 .titleWrapper {
   display: flex;
