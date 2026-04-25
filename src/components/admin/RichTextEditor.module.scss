@@ -1,0 +1,101 @@
+.wrapper {
+  border: 1.5px solid var(--border);
+  border-radius: $radius-xl;
+  overflow: hidden;
+  transition: border-color $transition-fast;
+
+  &:focus-within { border-color: var(--color-primary); }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+  padding: $space-2 $space-3;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.toolBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-md;
+  @include flex-center;
+  color: var(--text-secondary);
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: $text-sm;
+  font-weight: $font-bold;
+  transition: all $transition-fast;
+
+  &:hover { background: var(--bg-surface); color: var(--text-primary); }
+
+  &.active {
+    background: var(--color-primary);
+    color: #fff;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 $space-1;
+  align-self: center;
+}
+
+.content {
+  padding: $space-4 $space-6;
+  min-height: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  color: var(--text-primary);
+  line-height: $leading-relaxed;
+  font-size: $text-base;
+  @include scrollbar-thin;
+
+  :global(h1), :global(h2), :global(h3), :global(h4) {
+    font-weight: $font-bold;
+    line-height: $leading-tight;
+    margin: $space-6 0 $space-3;
+    color: var(--text-primary);
+  }
+  :global(h2) { font-size: $text-2xl; }
+  :global(h3) { font-size: $text-xl; }
+  :global(h4) { font-size: $text-lg; }
+  :global(p) { margin-bottom: $space-4; }
+  :global(a) { color: var(--color-primary); text-decoration: underline; }
+  :global(strong) { font-weight: $font-bold; }
+  :global(em) { font-style: italic; }
+  :global(ul), :global(ol) { padding-left: $space-6; margin-bottom: $space-4; }
+  :global(ul) { list-style: disc; }
+  :global(ol) { list-style: decimal; }
+  :global(li) { margin-bottom: $space-1; }
+  :global(blockquote) {
+    border-left: 4px solid var(--color-primary);
+    padding: $space-3 $space-5;
+    margin: $space-4 0;
+    background: var(--bg-secondary);
+    border-radius: 0 $radius-lg $radius-lg 0;
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+  :global(code) {
+    background: var(--bg-surface);
+    padding: 2px 6px;
+    border-radius: $radius-sm;
+    font-size: 0.875em;
+    color: var(--color-primary);
+  }
+  :global(pre) {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: $space-4;
+    border-radius: $radius-xl;
+    overflow-x: auto;
+    margin: $space-4 0;
+  }
+  :global(img) { border-radius: $radius-lg; margin: $space-4 auto; max-width: 100%; }
+  :global(hr) { border: none; border-top: 1px solid var(--border); margin: $space-6 0; }
+}

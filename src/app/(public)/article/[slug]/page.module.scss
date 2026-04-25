@@ -1,0 +1,312 @@
+.page {
+  @include container;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-8;
+  padding-top: $space-8;
+  padding-bottom: $space-12;
+
+  @include lg { grid-template-columns: 1fr 320px; }
+}
+
+.article { min-width: 0; }
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $text-sm;
+  color: var(--text-muted);
+  margin-bottom: $space-6;
+  flex-wrap: wrap;
+
+  a { transition: color $transition-fast; &:hover { color: var(--color-primary); } }
+  span[aria-current] { @include truncate; max-width: 200px; }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-4;
+}
+
+.category {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-bold;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.breaking {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-bold;
+  color: #fff;
+  background: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  @include pulse;
+}
+
+.title {
+  font-size: clamp($text-2xl, 4vw, $text-4xl);
+  font-weight: $font-extrabold;
+  line-height: $leading-tight;
+  color: var(--text-primary);
+  margin-bottom: $space-4;
+}
+
+.excerpt {
+  font-size: $text-xl;
+  color: var(--text-secondary);
+  line-height: $leading-relaxed;
+  margin-bottom: $space-6;
+  font-style: italic;
+}
+
+.byline {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: $space-4;
+  padding-bottom: $space-6;
+  margin-bottom: $space-6;
+  border-bottom: 1px solid var(--border);
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.authorAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-full;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: $font-bold;
+  @include flex-center;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img { @include img-cover; }
+}
+
+.authorName {
+  display: block;
+  font-weight: $font-semibold;
+  color: var(--text-primary);
+  font-size: $text-sm;
+}
+
+.date {
+  display: block;
+  font-size: $text-xs;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.coverImage {
+  margin-bottom: $space-8;
+  border-radius: $radius-2xl;
+  overflow: hidden;
+
+  .img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+  }
+
+  figcaption {
+    padding: $space-2 $space-3;
+    font-size: $text-xs;
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    background: var(--bg-secondary);
+  }
+}
+
+.content {
+  margin-bottom: $space-8;
+}
+
+.tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-6;
+}
+
+.tagsLabel {
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  color: var(--text-secondary);
+}
+
+.tag {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-medium;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  transition: all $transition-fast;
+  text-decoration: none;
+
+  &:hover { border-color: var(--color-primary); color: var(--color-primary); background: rgba(220,38,38,0.05); }
+}
+
+.shareBottom {
+  padding-top: $space-6;
+  border-top: 1px solid var(--border);
+}
+
+// ─── Sidebar ──────────────────────────────────────────────────────────────────
+.sidebar { display: none; @include lg { display: block; } }
+
+.sidebarCard {
+  position: sticky;
+  top: calc($header-height + $space-6);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+  padding: $space-5;
+}
+
+.sidebarTitle {
+  font-size: $text-base;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+  margin-bottom: $space-4;
+  padding-bottom: $space-3;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.relatedList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+// ─── Comments ─────────────────────────────────────────────────────────────────
+.commentsSection {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: $space-12 0;
+  margin-top: $space-8;
+}
+
+.commentsInner {
+  @include container;
+  max-width: 800px;
+}
+
+.commentsTitle {
+  font-size: $text-2xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+  margin-bottom: $space-8;
+}
+
+.commentForm {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+  padding: $space-6;
+  margin-bottom: $space-8;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.commentFormRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @include max-sm { grid-template-columns: 1fr; }
+}
+
+.commentSuccess {
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.3);
+  color: #15803d;
+  padding: $space-4 $space-6;
+  border-radius: $radius-xl;
+  margin-bottom: $space-8;
+  font-weight: $font-medium;
+}
+
+.commentError {
+  color: #dc2626;
+  font-size: $text-sm;
+}
+
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.comment {
+  display: flex;
+  gap: $space-4;
+}
+
+.commentAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: $font-bold;
+  font-size: $text-sm;
+  @include flex-center;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img { @include img-cover; }
+}
+
+.commentBody { flex: 1; min-width: 0; }
+
+.commentMeta {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-1;
+}
+
+.commentAuthor {
+  font-weight: $font-semibold;
+  font-size: $text-sm;
+  color: var(--text-primary);
+}
+
+.commentDate {
+  font-size: $text-xs;
+  color: var(--text-muted);
+}
+
+.commentContent {
+  font-size: $text-sm;
+  color: var(--text-secondary);
+  line-height: $leading-relaxed;
+}
+
+.noComments {
+  text-align: center;
+  color: var(--text-muted);
+  padding: $space-8;
+}

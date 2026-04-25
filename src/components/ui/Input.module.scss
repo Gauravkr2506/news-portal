@@ -1,0 +1,83 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.label {
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-primary);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: $space-2 $space-3;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-size: $text-sm;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  line-height: $leading-normal;
+
+  &::placeholder { color: var(--text-muted); }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  }
+
+  &.hasIcon { padding-left: $space-10; }
+  &.hasRightIcon { padding-right: $space-10; }
+
+  &.error {
+    border-color: #dc2626;
+    &:focus { box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1); }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-surface);
+  }
+}
+
+.icon {
+  position: absolute;
+  left: $space-3;
+  color: var(--text-muted);
+  pointer-events: none;
+  display: flex;
+}
+
+.rightIcon {
+  position: absolute;
+  right: $space-3;
+  color: var(--text-muted);
+  display: flex;
+}
+
+.errorMsg {
+  font-size: $text-xs;
+  color: #dc2626;
+  margin-top: $space-1;
+}
+
+.hint {
+  font-size: $text-xs;
+  color: var(--text-muted);
+  margin-top: $space-1;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}

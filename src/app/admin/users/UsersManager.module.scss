@@ -1,0 +1,154 @@
+.table {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.t {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $space-3 $space-4;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: $text-sm;
+    white-space: nowrap;
+  }
+
+  th {
+    background: var(--bg-secondary);
+    font-weight: $font-semibold;
+    color: var(--text-secondary);
+    font-size: $text-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-secondary); }
+}
+
+.bannedRow td { opacity: 0.6; }
+
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-full;
+  overflow: hidden;
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $text-xs;
+  font-weight: $font-bold;
+  flex-shrink: 0;
+
+  img { border-radius: $radius-full; }
+}
+
+.userName {
+  font-weight: $font-semibold;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.youBadge {
+  padding: 0 6px;
+  background: var(--bg-secondary);
+  border-radius: $radius-full;
+  font-size: 10px;
+  font-weight: $font-normal;
+  color: var(--text-muted);
+}
+
+.email {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.verified {
+  color: #16a34a;
+  font-size: $text-xs;
+  font-weight: $font-bold;
+}
+
+.role {
+  padding: 2px 8px;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  &.role_owner { background: rgba(124,58,237,0.1); color: #7c3aed; }
+  &.role_admin { background: rgba(37,99,235,0.1); color: #2563eb; }
+  &.role_user { background: var(--bg-secondary); color: var(--text-muted); }
+}
+
+.roleSelect {
+  padding: 2px $space-2;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-md;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: $text-xs;
+  cursor: pointer;
+  outline: none;
+  transition: border-color $transition-fast;
+  &:focus { border-color: var(--color-primary); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.bannedBadge {
+  padding: 2px 8px;
+  background: rgba(220,38,38,0.1);
+  color: #dc2626;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+}
+
+.activeBadge {
+  padding: 2px 8px;
+  background: rgba(22,163,74,0.1);
+  color: #16a34a;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+}
+
+.date {
+  color: var(--text-muted);
+  font-size: $text-xs;
+}
+
+.banBtn {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  border: 1.5px solid #dc2626;
+  color: #dc2626;
+  background: transparent;
+  transition: all $transition-fast;
+  &:hover:not(:disabled) { background: rgba(220,38,38,0.08); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.unbanBtn {
+  border-color: #16a34a;
+  color: #16a34a;
+  &:hover:not(:disabled) { background: rgba(22,163,74,0.08); }
+}

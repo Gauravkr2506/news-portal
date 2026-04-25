@@ -1,0 +1,100 @@
+.page {
+  @include container;
+  padding-top: $space-8;
+  padding-bottom: $space-12;
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: $text-3xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+}
+
+.count {
+  font-size: $text-sm;
+  color: var(--text-muted);
+}
+
+.searchForm {
+  width: 100%;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: $radius-full;
+  transition: border-color $transition-fast;
+  max-width: 600px;
+
+  &:focus-within { border-color: var(--color-primary); }
+}
+
+.searchIcon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: $text-base;
+  outline: none;
+  &::placeholder { color: var(--text-muted); }
+}
+
+.searchBtn {
+  padding: $space-1 $space-4;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  transition: background $transition-fast;
+  &:hover { background: var(--color-primary-dark); }
+}
+
+.prompt, .empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $space-16 $space-4;
+  text-align: center;
+  color: var(--text-muted);
+  gap: $space-3;
+
+  svg { opacity: 0.3; }
+  p { font-size: $text-lg; margin: 0; }
+}
+
+.emptyHint {
+  font-size: $text-sm !important;
+  color: var(--text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-5;
+
+  @include sm { grid-template-columns: repeat(2, 1fr); }
+  @include lg { grid-template-columns: repeat(3, 1fr); }
+}

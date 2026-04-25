@@ -1,0 +1,100 @@
+.footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding-top: $space-16;
+  margin-top: $space-16;
+}
+
+.grid {
+  @include container;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-10;
+
+  @include md { grid-template-columns: 2fr 1fr 1fr 1fr; }
+}
+
+.brand {
+  .logo {
+    font-size: $text-2xl;
+    font-weight: $font-extrabold;
+    color: #f8fafc;
+    margin-bottom: $space-3;
+  }
+
+  p {
+    font-size: $text-sm;
+    line-height: $leading-relaxed;
+    margin-bottom: $space-6;
+    max-width: 300px;
+  }
+
+  .social {
+    display: flex;
+    gap: $space-3;
+
+    a {
+      width: 36px;
+      height: 36px;
+      border-radius: $radius-full;
+      background: rgba(255,255,255,0.05);
+      @include flex-center;
+      color: #94a3b8;
+      transition: all $transition-fast;
+
+      &:hover {
+        background: $color-primary;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.section {
+  h4 {
+    color: #f8fafc;
+    font-size: $text-sm;
+    font-weight: $font-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: $space-4;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  a {
+    font-size: $text-sm;
+    transition: color $transition-fast;
+    &:hover { color: #f8fafc; }
+  }
+}
+
+.bottom {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: $space-10;
+  padding: $space-6 0;
+
+  .bottomInner {
+    @include container;
+    @include flex-between;
+    flex-wrap: wrap;
+    gap: $space-4;
+  }
+
+  p { font-size: $text-xs; }
+
+  .links {
+    display: flex;
+    gap: $space-4;
+
+    a {
+      font-size: $text-xs;
+      transition: color $transition-fast;
+      &:hover { color: #f8fafc; }
+    }
+  }
+}

@@ -1,0 +1,112 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.empty {
+  padding: $space-12;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  border-left-width: 3px;
+
+  &.pending { border-left-color: #d97706; }
+  &.approved { border-left-color: #16a34a; }
+  &.rejected { border-left-color: #dc2626; }
+}
+
+.cardHeader {
+  @include flex-between;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-wrap: wrap;
+  font-size: $text-sm;
+}
+
+.author {
+  font-weight: $font-semibold;
+  color: var(--text-primary);
+}
+
+.email, .date {
+  color: var(--text-muted);
+  font-size: $text-xs;
+}
+
+.article {
+  color: var(--text-secondary);
+  font-size: $text-xs;
+  @include truncate;
+  max-width: 200px;
+}
+
+.dot { color: var(--border); }
+
+.badge {
+  padding: 2px $space-2;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  flex-shrink: 0;
+
+  &.badge_pending { background: rgba(217,119,6,0.1); color: #d97706; }
+  &.badge_approved { background: rgba(22,163,74,0.1); color: #16a34a; }
+  &.badge_rejected { background: rgba(220,38,38,0.1); color: #dc2626; }
+}
+
+.content {
+  font-size: $text-sm;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  border: 1.5px solid;
+  transition: all $transition-fast;
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.approveBtn {
+  border-color: #16a34a; color: #16a34a;
+  &:hover:not(:disabled) { background: rgba(22,163,74,0.1); }
+}
+.rejectBtn {
+  border-color: #dc2626; color: #dc2626;
+  &:hover:not(:disabled) { background: rgba(220,38,38,0.08); }
+}
+.pendingBtn {
+  border-color: #d97706; color: #d97706;
+  &:hover:not(:disabled) { background: rgba(217,119,6,0.08); }
+}
+.deleteBtn {
+  border-color: var(--border); color: var(--text-muted);
+  &:hover:not(:disabled) { border-color: #dc2626; color: #dc2626; }
+}

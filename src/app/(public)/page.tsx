@@ -3,10 +3,9 @@ import Link from 'next/link'
 import { db } from '@/lib/db'
 import { articles, categories, users } from '@/lib/db/schema'
 import { eq, desc, and, sql } from 'drizzle-orm'
-import { PublicLayout } from '@/components/layout/PublicLayout'
 import { ArticleCard } from '@/components/news/ArticleCard'
 import { BreakingTicker } from '@/components/news/BreakingTicker'
-import styles from './(public)/page.module.scss'
+import styles from './page.module.scss'
 import type { ArticleWithRelations } from '@/types'
 
 export const metadata: Metadata = {
@@ -109,10 +108,11 @@ export default async function HomePage() {
   const latestArticles = latest.map(r => mapArticle(r as unknown as Record<string, unknown>))
 
   return (
-    <PublicLayout>
+    <>
       {breaking.length > 0 && <BreakingTicker articles={breaking} />}
 
       <div className={styles.page}>
+        {/* Hero */}
         {featuredArticle && (
           <section className={styles.hero} aria-label="Featured article">
             <div className={styles.heroInner}>
@@ -122,6 +122,7 @@ export default async function HomePage() {
         )}
 
         <div className={styles.main}>
+          {/* Latest News Grid */}
           <section className={styles.latest} aria-label="Latest news">
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Latest News</h2>
@@ -139,6 +140,7 @@ export default async function HomePage() {
             )}
           </section>
 
+          {/* Sidebar */}
           <aside className={styles.sidebar} aria-label="Sidebar">
             <div className={styles.sidebarCard}>
               <h3 className={styles.sidebarTitle}>Browse Categories</h3>
@@ -166,6 +168,6 @@ export default async function HomePage() {
           </aside>
         </div>
       </div>
-    </PublicLayout>
+    </>
   )
 }

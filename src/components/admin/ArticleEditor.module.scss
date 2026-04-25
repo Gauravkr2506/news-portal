@@ -1,0 +1,380 @@
+.editor {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-6;
+  align-items: start;
+
+  @include lg { grid-template-columns: 1fr 300px; }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.titleInput {
+  width: 100%;
+  font-size: $text-2xl;
+  font-weight: $font-bold;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  padding: $space-2 0;
+  outline: none;
+  transition: border-color $transition-fast;
+
+  &:focus { border-color: var(--color-primary); }
+  &::placeholder { color: var(--text-muted); }
+}
+
+.slugRow {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.slugLabel {
+  font-size: $text-xs;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-weight: $font-medium;
+}
+
+.slugInput {
+  flex: 1;
+  font-size: $text-xs;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 2px $space-2;
+  border-radius: $radius-md;
+  outline: none;
+  transition: all $transition-fast;
+
+  &:focus {
+    border-color: var(--color-primary);
+    background: var(--bg-secondary);
+  }
+  &::placeholder { color: var(--text-muted); }
+}
+
+.coverSection {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.coverPreview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.removeCover {
+  position: absolute;
+  top: $space-2;
+  right: $space-2;
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-full;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: $text-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background $transition-fast;
+  &:hover { background: rgba(220,38,38,0.8); }
+}
+
+.coverUpload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 2px dashed var(--border);
+  border-radius: $radius-xl;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all $transition-fast;
+  font-size: $text-sm;
+
+  svg { opacity: 0.5; }
+  small { font-size: $text-xs; }
+  &:hover { border-color: var(--color-primary); color: var(--color-primary); background: var(--bg-secondary); }
+  &.uploading { opacity: 0.6; cursor: not-allowed; }
+}
+
+.altInput {
+  padding: $space-2 $space-3;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: $text-sm;
+  outline: none;
+  transition: border-color $transition-fast;
+  &:focus { border-color: var(--color-primary); }
+  &::placeholder { color: var(--text-muted); }
+}
+
+.label {
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+
+  small {
+    font-weight: $font-normal;
+    color: var(--text-muted);
+    margin-left: $space-1;
+  }
+}
+
+.input {
+  padding: $space-2 $space-3;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: $text-sm;
+  outline: none;
+  transition: border-color $transition-fast;
+  &:focus { border-color: var(--color-primary); }
+  &::placeholder { color: var(--text-muted); }
+}
+
+.textarea {
+  padding: $space-3;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: $text-sm;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+  line-height: 1.6;
+  transition: border-color $transition-fast;
+  &:focus { border-color: var(--color-primary); }
+  &::placeholder { color: var(--text-muted); }
+}
+
+.charCount, .wordCount {
+  font-size: $text-xs;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.error {
+  font-size: $text-sm;
+  color: $color-danger;
+  padding: $space-2 $space-3;
+  background: rgba(220,38,38,0.08);
+  border-radius: $radius-md;
+}
+
+.seoSection {
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  overflow: hidden;
+}
+
+.seoToggle {
+  padding: $space-3 $space-4;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: var(--bg-secondary);
+  &:hover { color: var(--text-primary); }
+  &::marker { color: var(--text-muted); }
+}
+
+.seoFields {
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+// Sidebar
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  position: sticky;
+  top: $space-4;
+}
+
+.panel {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.panelTitle {
+  font-size: $text-sm;
+  font-weight: $font-bold;
+  color: var(--text-primary);
+  padding-bottom: $space-2;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: $space-1;
+}
+
+.statusRow {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.select {
+  padding: $space-2 $space-3;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: $text-sm;
+  cursor: pointer;
+  outline: none;
+  transition: border-color $transition-fast;
+  &:focus { border-color: var(--color-primary); }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.draftBtn, .previewBtn, .publishBtn {
+  padding: $space-2 $space-4;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  transition: all $transition-fast;
+  text-align: center;
+  border: 1.5px solid;
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.draftBtn {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-secondary);
+  &:hover:not(:disabled) { border-color: var(--text-secondary); color: var(--text-primary); }
+}
+
+.previewBtn {
+  background: transparent;
+  border-color: #2563eb;
+  color: #2563eb;
+  &:hover:not(:disabled) { background: rgba(37,99,235,0.08); }
+}
+
+.publishBtn {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  &:hover:not(:disabled) { background: var(--color-primary-dark); border-color: var(--color-primary-dark); }
+}
+
+.previewLink {
+  font-size: $text-xs;
+  color: var(--color-primary);
+  text-decoration: none;
+  text-align: center;
+  &:hover { text-decoration: underline; }
+}
+
+.tagInput {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-1;
+  padding: $space-2;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-lg;
+  background: var(--bg-secondary);
+  min-height: 40px;
+  cursor: text;
+  transition: border-color $transition-fast;
+  &:focus-within { border-color: var(--color-primary); }
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px $space-2;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-medium;
+
+  button {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    font-size: 10px;
+    padding: 0;
+    line-height: 1;
+    &:hover { color: #fff; }
+  }
+}
+
+.tagTextInput {
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: $text-sm;
+  outline: none;
+  min-width: 80px;
+  flex: 1;
+  &::placeholder { color: var(--text-muted); }
+}
+
+.hint {
+  font-size: $text-xs;
+  color: var(--text-muted);
+}
+
+.checkLabel {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $text-sm;
+  color: var(--text-secondary);
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  &:hover { color: var(--text-primary); }
+}

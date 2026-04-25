@@ -1,0 +1,117 @@
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { db } from '@/lib/db'
+import { articles, categories, users } from '@/lib/db/schema'
+import { eq, and, desc } from 'drizzle-orm'
+import { ArticleCard } from '@/components/news/ArticleCard'
+import styles from './page.module.scss'
+import type { ArticleWithRelations } from '@/types'
+
+interface Props {
+  params: Promise<{ category: string }>
+  searchParams: Promise<{ page?: string }>
+}
+
+const PAGE_SIZE = 12
+
+async function getCategory(slug: string) {
+  const rows = await db.select().from(categories).where(and(eq(categories.slug, slug), eq(categories.isActive, true))).limit(1)
+  return rows[0] ?? null
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { category: slug } = await params
+  const cat = await getCategory(slug)
+  if (!cat) return { title: 'Category Not Found' }
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://newsedition.in'
+  return {
+    title: `${cat.name} News`,
+    description: cat.description || `Latest ${cat.name} news and updates from NewsEdition.`,
+    alternates: { canonical: `${siteUrl}/${slug}` },
+  }
+}
+
+export async function generateStaticParams() {
+  const cats = await db.select({ slug: categories.slug }).from(categories).where(eq(categories.isActive, true))
+  return cats.map((c) => ({ category: c.slug }))
+}
+
+export const revalidate = 300
+
+export default async function CategoryPage({ params, searchParams }: Props) {
+  const { category: slug } = await params
+  const { page: pageStr } = await searchParams
+  const page = Math.max(1, Number(pageStr) || 1)
+
+  const cat = await getCategory(slug)
+  if (!cat) notFound()
+
+  const rows = await db.select({
+    id: articles.id, title: articles.title, slug: articles.slug,
+    excerpt: articles.excerpt, coverImage: articles.coverImage,
+    coverImageAlt: articles.coverImageAlt, coverImagePublicId: articles.coverImagePublicId,
+    content: articles.content, status: articles.status, isFeatured: articles.isFeatured,
+    isBreaking: articles.isBreaking, tags: articles.tags,
+    seoTitle: articles.seoTitle, seoDescription: articles.seoDescription,
+    viewCount: articles.viewCount, publishedAt: articles.publishedAt,
+    createdAt: articles.createdAt, updatedAt: articles.updatedAt,
+    categoryId: categories.id, categoryName: categories.name,
+    categorySlug: categories.slug, categoryColor: categories.color,
+    authorId: users.id, authorName: users.name, authorImage: users.image,
+  })
+    .from(articles)
+    .leftJoin(categories, eq(articles.categoryId, categories.id))
+    .leftJoin(users, eq(articles.authorId, users.id))
+    .where(and(eq(articles.status, 'published'), eq(articles.categoryId, cat.id)))
+    .orderBy(desc(articles.publishedAt))
+    .limit(PAGE_SIZE)
+    .offset((page - 1) * PAGE_SIZE)
+
+  const articlesList: ArticleWithRelations[] = rows.map((r) => ({
+    id: r.id, title: r.title, slug: r.slug, content: r.content,
+    excerpt: r.excerpt, coverImage: r.coverImage, coverImageAlt: r.coverImageAlt,
+    coverImagePublicId: r.coverImagePublicId, status: r.status as 'published',
+    isFeatured: r.isFeatured, isBreaking: r.isBreaking, tags: r.tags,
+    seoTitle: r.seoTitle, seoDescription: r.seoDescription, viewCount: r.viewCount,
+    publishedAt: r.publishedAt, createdAt: r.createdAt, updatedAt: r.updatedAt,
+    category: r.categoryId ? { id: r.categoryId, name: r.categoryName!, slug: r.categorySlug!, color: r.categoryColor! } : null,
+    author: r.authorId ? { id: r.authorId, name: r.authorName!, image: r.authorImage } : null,
+  }))
+
+  const hasMore = rows.length === PAGE_SIZE
+
+  return (
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div className={styles.dot} style={{ background: cat.color ?? undefined }} />
+        <h1 className={styles.title}>{cat.name}</h1>
+        {cat.description && <p className={styles.description}>{cat.description}</p>}
+      </div>
+
+      {articlesList.length > 0 ? (
+        <>
+          <div className={styles.grid}>
+            {articlesList.map((a, i) => (
+              <ArticleCard key={a.id} article={a} priority={i < 3} />
+            ))}
+          </div>
+          <div className={styles.pagination}>
+            {page > 1 && (
+              <Link href={`/${slug}?page=${page - 1}`} className={styles.pageBtn}>← Previous</Link>
+            )}
+            <span className={styles.pageInfo}>Page {page}</span>
+            {hasMore && (
+              <Link href={`/${slug}?page=${page + 1}`} className={styles.pageBtn}>Next →</Link>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className={styles.empty}>
+          <p>No articles in this category yet. Check back soon!</p>
+          <Link href="/" className={styles.backLink}>← Back to Home</Link>
+        </div>
+      )}
+    </div>
+  )
+}

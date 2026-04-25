@@ -1,0 +1,22 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+}
+
+.title {
+  font-size: $text-3xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: $text-sm;
+  color: var(--text-muted);
+}

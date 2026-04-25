@@ -1,0 +1,16 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.header {
+  @include flex-between;
+  gap: $space-4;
+}
+
+.title {
+  font-size: $text-3xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+}

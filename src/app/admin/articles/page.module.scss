@@ -1,0 +1,208 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.header {
+  @include flex-between;
+  gap: $space-4;
+}
+
+.title {
+  font-size: $text-3xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+}
+
+.newBtn {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-5;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  transition: background $transition-fast;
+  text-decoration: none;
+  &:hover { background: var(--color-primary-dark); }
+}
+
+.filters {
+  @include flex-between;
+  gap: $space-4;
+  flex-wrap: wrap;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+  padding: $space-3 $space-4;
+}
+
+.statusTabs {
+  display: flex;
+  gap: $space-1;
+}
+
+.tab {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all $transition-fast;
+  &:hover { background: var(--bg-surface); }
+  &.activeTab { background: var(--color-primary); color: #fff; }
+}
+
+.searchForm {
+  display: flex;
+  gap: $space-2;
+}
+
+.searchInput {
+  padding: $space-2 $space-4;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-full;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: $text-sm;
+  min-width: 200px;
+  transition: border-color $transition-fast;
+
+  &:focus { outline: none; border-color: var(--color-primary); }
+  &::placeholder { color: var(--text-muted); }
+}
+
+.tableWrapper {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: $space-3 $space-4;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: $text-sm;
+    white-space: nowrap;
+  }
+
+  th {
+    background: var(--bg-secondary);
+    font-weight: $font-semibold;
+    color: var(--text-secondary);
+    font-size: $text-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-secondary); }
+}
+
+.titleCell { min-width: 280px; max-width: 400px; }
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.breakingDot {
+  width: 8px;
+  height: 8px;
+  border-radius: $radius-full;
+  background: $color-primary;
+  flex-shrink: 0;
+  @include pulse;
+}
+
+.featuredDot {
+  width: 8px;
+  height: 8px;
+  border-radius: $radius-full;
+  background: $color-accent;
+  flex-shrink: 0;
+}
+
+.articleTitle {
+  font-weight: $font-medium;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: normal;
+  @include line-clamp(2);
+  &:hover { color: var(--color-primary); }
+}
+
+.catBadge {
+  padding: 2px 8px;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-medium;
+  border: 1.5px solid;
+  color: var(--text-secondary);
+}
+
+.authorCell { color: var(--text-secondary); }
+.dateCell { color: var(--text-muted); font-size: $text-xs; }
+
+.badge {
+  padding: 2px 8px;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  &.published { background: rgba(22, 163, 74, 0.1); color: #16a34a; }
+  &.draft { background: rgba(217, 119, 6, 0.1); color: #d97706; }
+  &.preview { background: rgba(37, 99, 235, 0.1); color: #2563eb; }
+}
+
+.actions {
+  display: flex;
+  gap: $space-2;
+}
+
+.actionBtn {
+  text-decoration: none;
+  font-size: 14px;
+  padding: 2px;
+  border-radius: $radius-sm;
+  transition: transform $transition-fast;
+  &:hover { transform: scale(1.2); }
+}
+
+.pagination {
+  @include flex-center;
+  gap: $space-4;
+}
+
+.pageBtn {
+  padding: $space-2 $space-4;
+  border: 1.5px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  transition: all $transition-fast;
+  text-decoration: none;
+  &:hover { border-color: var(--color-primary); color: var(--color-primary); }
+}
+
+.pageInfo {
+  font-size: $text-sm;
+  color: var(--text-muted);
+}
+
+.empty {
+  padding: $space-12;
+  text-align: center;
+  color: var(--text-muted);
+}

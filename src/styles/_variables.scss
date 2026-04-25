@@ -1,0 +1,134 @@
+// ─── Brand Colors ─────────────────────────────────────────────────────────────
+$color-primary: #dc2626;
+$color-primary-dark: #b91c1c;
+$color-primary-light: #ef4444;
+$color-secondary: #1d4ed8;
+$color-secondary-dark: #1e40af;
+$color-accent: #f59e0b;
+$color-danger: #dc2626;
+$color-success: #16a34a;
+$color-warning: #d97706;
+
+// ─── Light Mode Palette ───────────────────────────────────────────────────────
+$bg-light: #ffffff;
+$bg-secondary-light: #f8fafc;
+$bg-surface-light: #f1f5f9;
+$text-primary-light: #0f172a;
+$text-secondary-light: #64748b;
+$text-muted-light: #94a3b8;
+$border-light: #e2e8f0;
+$border-strong-light: #cbd5e1;
+
+// ─── Dark Mode Palette ────────────────────────────────────────────────────────
+$bg-dark: #0f172a;
+$bg-secondary-dark: #1e293b;
+$bg-surface-dark: #334155;
+$text-primary-dark: #f8fafc;
+$text-secondary-dark: #94a3b8;
+$text-muted-dark: #64748b;
+$border-dark: #334155;
+$border-strong-dark: #475569;
+
+// ─── Category Colors ──────────────────────────────────────────────────────────
+$cat-politics: #dc2626;
+$cat-business: #2563eb;
+$cat-sports: #16a34a;
+$cat-technology: #7c3aed;
+$cat-entertainment: #db2777;
+$cat-health: #0d9488;
+$cat-science: #4338ca;
+$cat-world: #ea580c;
+$cat-education: #0891b2;
+$cat-lifestyle: #e11d48;
+$cat-environment: #65a30d;
+$cat-crime: #475569;
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-serif: Georgia, 'Times New Roman', serif;
+$font-mono: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-2xl: 1.5rem;
+$text-3xl: 1.875rem;
+$text-4xl: 2.25rem;
+$text-5xl: 3rem;
+
+$font-normal: 400;
+$font-medium: 500;
+$font-semibold: 600;
+$font-bold: 700;
+$font-extrabold: 800;
+
+$leading-tight: 1.25;
+$leading-snug: 1.375;
+$leading-normal: 1.5;
+$leading-relaxed: 1.625;
+$leading-loose: 2;
+
+// ─── Spacing ──────────────────────────────────────────────────────────────────
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+$space-10: 2.5rem;
+$space-12: 3rem;
+$space-16: 4rem;
+$space-20: 5rem;
+$space-24: 6rem;
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+$container-max: 1280px;
+$container-sm: 640px;
+$container-md: 768px;
+$container-lg: 1024px;
+$sidebar-width: 300px;
+$admin-sidebar-width: 260px;
+$header-height: 64px;
+$admin-header-height: 56px;
+
+// ─── Breakpoints ──────────────────────────────────────────────────────────────
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+$bp-2xl: 1536px;
+
+// ─── Border Radius ────────────────────────────────────────────────────────────
+$radius-sm: 0.25rem;
+$radius-md: 0.375rem;
+$radius-lg: 0.5rem;
+$radius-xl: 0.75rem;
+$radius-2xl: 1rem;
+$radius-full: 9999px;
+
+// ─── Shadows ──────────────────────────────────────────────────────────────────
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+$shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+$shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+// ─── Transitions ──────────────────────────────────────────────────────────────
+$transition-fast: 150ms ease;
+$transition-normal: 250ms ease;
+$transition-slow: 350ms ease;
+
+// ─── Z-Index ──────────────────────────────────────────────────────────────────
+$z-below: -1;
+$z-base: 0;
+$z-raised: 10;
+$z-dropdown: 100;
+$z-sticky: 200;
+$z-header: 300;
+$z-overlay: 400;
+$z-modal: 500;
+$z-toast: 600;

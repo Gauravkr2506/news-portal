@@ -1,0 +1,155 @@
+.sidebar {
+  width: $admin-sidebar-width;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  flex-shrink: 0;
+  overflow-y: auto;
+  @include scrollbar-thin;
+
+  @include max-md { display: none; }
+}
+
+.header {
+  padding: $space-5 $space-5 $space-4;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: $text-xl;
+  font-weight: $font-extrabold;
+  color: var(--color-primary);
+  display: block;
+  text-decoration: none;
+  margin-bottom: $space-1;
+}
+
+.adminBadge {
+  font-size: $text-xs;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-4 $space-5;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: $font-bold;
+  font-size: $text-sm;
+  @include flex-center;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img { @include img-cover; }
+}
+
+.userInfo {
+  min-width: 0;
+  flex: 1;
+}
+
+.userName {
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  color: var(--text-primary);
+  @include truncate;
+}
+
+.userRole {
+  font-size: $text-xs;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.nav {
+  flex: 1;
+  padding: $space-3;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.section {
+  padding: $space-3 $space-2 $space-1;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-2 $space-3;
+  border-radius: $radius-lg;
+  font-size: $text-sm;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover { background: var(--bg-secondary); color: var(--text-primary); }
+
+  &.active {
+    background: rgba(220, 38, 38, 0.08);
+    color: var(--color-primary);
+    font-weight: $font-semibold;
+  }
+
+  svg { flex-shrink: 0; opacity: 0.7; }
+}
+
+.footer {
+  padding: $space-3 $space-4;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.viewSite {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  font-size: $text-xs;
+  color: var(--text-muted);
+  border-radius: $radius-lg;
+  text-decoration: none;
+  transition: all $transition-fast;
+  &:hover { color: var(--text-primary); background: var(--bg-secondary); }
+}
+
+.signOut {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  font-size: $text-xs;
+  color: #dc2626;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: all $transition-fast;
+  &:hover { background: rgba(220, 38, 38, 0.05); }
+}

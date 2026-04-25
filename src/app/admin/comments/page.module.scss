@@ -1,0 +1,37 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.header {
+  @include flex-between;
+}
+
+.title {
+  font-size: $text-3xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+}
+
+.tabs {
+  display: flex;
+  gap: $space-1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+  padding: $space-2 $space-3;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all $transition-fast;
+  &:hover { background: var(--bg-surface); }
+  &.activeTab { background: var(--color-primary); color: #fff; }
+}

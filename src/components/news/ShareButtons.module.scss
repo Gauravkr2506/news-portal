@@ -1,0 +1,37 @@
+.share {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  color: var(--text-secondary);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-2 $space-3;
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+  text-decoration: none;
+  color: #fff;
+
+  &.twitter { background: #000; &:hover { background: #1a1a1a; } }
+  &.facebook { background: #1877f2; &:hover { background: #166fe5; } }
+  &.whatsapp { background: #25d366; &:hover { background: #20b354; } }
+  &.copy {
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    &:hover { background: var(--border); color: var(--text-primary); }
+  }
+}

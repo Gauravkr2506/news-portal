@@ -1,0 +1,61 @@
+.ticker {
+  background: var(--color-primary);
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.label {
+  padding: 0 $space-4;
+  font-size: $text-xs;
+  font-weight: $font-extrabold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  background: rgba(0,0,0,0.2);
+  height: 100%;
+  @include flex-center;
+  flex-shrink: 0;
+  @include pulse;
+}
+
+.marquee {
+  overflow: hidden;
+  flex: 1;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.track {
+  display: flex;
+  animation: ticker 30s linear infinite;
+  width: max-content;
+  gap: $space-12;
+
+  &:hover { animation-play-state: paused; }
+}
+
+.item {
+  white-space: nowrap;
+  font-size: $text-sm;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &::before {
+    content: '●';
+    font-size: 8px;
+    opacity: 0.6;
+  }
+
+  &:hover { color: #fff; text-decoration: underline; }
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
