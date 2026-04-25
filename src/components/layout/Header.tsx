@@ -28,7 +28,10 @@ export function Header({ categories = [] }: HeaderProps) {
   }, [])
 
   const topCategories = categories.slice(0, 10)
-  const today = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+  const [today, setToday] = useState('')
+  useEffect(() => {
+    setToday(new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))
+  }, [])
   const userRole = session?.user?.role
   const isAdmin = userRole === 'admin' || userRole === 'owner'
   const initial = session?.user?.name?.charAt(0).toUpperCase()
