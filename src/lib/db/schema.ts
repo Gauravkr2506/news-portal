@@ -63,6 +63,7 @@ export const categories = pgTable('categories', {
   description: text('description'),
   color: varchar('color', { length: 20 }).default('#3b82f6'),
   icon: varchar('icon', { length: 50 }),
+  parentId: integer('parentId').references((): any => categories.id, { onDelete: 'set null' }),
   isActive: boolean('isActive').notNull().default(true),
   sortOrder: integer('sortOrder').notNull().default(0),
   createdAt: timestamp('createdAt').defaultNow().notNull(),

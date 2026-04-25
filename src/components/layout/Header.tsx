@@ -8,7 +8,7 @@ import styles from './Header.module.scss'
 import type { Category } from '@/lib/db/schema'
 
 interface HeaderProps {
-  categories?: Pick<Category, 'name' | 'slug' | 'color'>[]
+  categories?: Pick<Category, 'id' | 'name' | 'slug' | 'color' | 'parentId'>[]
 }
 
 export function Header({ categories = [] }: HeaderProps) {
@@ -27,7 +27,11 @@ export function Header({ categories = [] }: HeaderProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const topCategories = categories.slice(0, 10)
+  const topLevel = categories.filter((c) => !c.parentId).slice(0, 10)
+  const subsByParent = categories.reduce<Record<number, typeof categories>>((acc, c) => {
+    if (c.parentId) { acc[c.parentId] = [...(acc[c.parentId] || []), c] }
+    return acc
+  }, {})
   const [today, setToday] = useState('')
   useEffect(() => {
     setToday(new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))
@@ -56,9 +60,24 @@ export function Header({ categories = [] }: HeaderProps) {
 
         <div className={styles.navLinks}>
           <Link href="/">Home</Link>
-          {topCategories.slice(0, 6).map((cat) => (
-            <Link key={cat.slug} href={`/${cat.slug}`}>{cat.name}</Link>
-          ))}
+          {topLevel.slice(0, 6).map((cat) => {
+            const subs = subsByParent[cat.id] || []
+            return subs.length > 0 ? (
+              <div key={cat.slug} className={styles.navItem}>
+                <Link href={`/${cat.slug}`} className={styles.navLink}>
+                  {cat.name}
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="m6 9 6 6 6-6"/></svg>
+                </Link>
+                <div className={styles.subMenu}>
+                  {subs.map((sub) => (
+                    <Link key={sub.slug} href={`/${sub.slug}`} className={styles.subLink}>{sub.name}</Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Link key={cat.slug} href={`/${cat.slug}`}>{cat.name}</Link>
+            )
+          })}
         </div>
 
         <div className={styles.actions}>
@@ -119,11 +138,11 @@ export function Header({ categories = [] }: HeaderProps) {
         </div>
       </nav>
 
-      {topCategories.length > 0 && (
+      {topLevel.length > 0 && (
         <div className={styles.categoryBar}>
           <div className={styles.categoryBarInner}>
             <Link href="/">All</Link>
-            {topCategories.map((cat) => (
+            {topLevel.map((cat) => (
               <Link key={cat.slug} href={`/${cat.slug}`}>{cat.name}</Link>
             ))}
           </div>
@@ -143,8 +162,15 @@ export function Header({ categories = [] }: HeaderProps) {
             </button>
           </div>
           <Link href="/" onClick={() => setShowMobile(false)}>Home</Link>
-          {categories.map((cat) => (
-            <Link key={cat.slug} href={`/${cat.slug}`} onClick={() => setShowMobile(false)}>{cat.name}</Link>
+          {topLevel.map((cat) => (
+            <div key={cat.slug}>
+              <Link href={`/${cat.slug}`} onClick={() => setShowMobile(false)}>{cat.name}</Link>
+              {(subsByParent[cat.id] || []).map((sub) => (
+                <Link key={sub.slug} href={`/${sub.slug}`} onClick={() => setShowMobile(false)} className={styles.mobileSub}>
+                  — {sub.name}
+                </Link>
+              ))}
+            </div>
           ))}
           <Link href="/search" onClick={() => setShowMobile(false)}>Search</Link>
           {!session && <Link href="/login" onClick={() => setShowMobile(false)}>Sign In</Link>}

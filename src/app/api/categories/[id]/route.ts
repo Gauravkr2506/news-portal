@@ -16,7 +16,12 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     if (!existing) return NextResponse.json({ error: 'Category not found' }, { status: 404 })
 
     const body = await request.json()
-    const { name, description, color, icon, isActive, sortOrder } = body
+    const { name, description, color, icon, isActive, sortOrder, parentId } = body
+
+    // Prevent making a parent into its own child or circular references
+    const resolvedParentId = 'parentId' in body
+      ? (parentId ? Number(parentId) : null)
+      : existing.parentId
 
     const [updated] = await db.update(categories).set({
       name: name?.trim() ?? existing.name,
@@ -24,6 +29,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       description: description?.trim() || null,
       color: color || existing.color,
       icon: icon?.trim() || null,
+      parentId: resolvedParentId === catId ? existing.parentId : resolvedParentId,
       isActive: isActive !== undefined ? Boolean(isActive) : existing.isActive,
       sortOrder: sortOrder !== undefined ? Number(sortOrder) : existing.sortOrder,
       updatedAt: new Date(),
@@ -43,6 +49,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     const catId = Number(id)
     if (isNaN(catId)) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
 
+    // Promote subcategories to top-level before deleting parent
+    await db.update(categories).set({ parentId: null }).where(eq(categories.parentId, catId))
     await db.delete(categories).where(eq(categories.id, catId))
     return NextResponse.json({ success: true })
   } catch (error) {

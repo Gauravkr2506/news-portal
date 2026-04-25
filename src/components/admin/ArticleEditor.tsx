@@ -297,8 +297,21 @@ export function ArticleEditor({ articleId, initialData, categories }: ArticleEdi
             className={styles.select}
           >
             <option value="">No category</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
+            {categories.filter((c) => !c.parentId).map((parent) => {
+              const children = categories.filter((c) => c.parentId === parent.id)
+              return children.length > 0 ? (
+                <optgroup key={parent.id} label={parent.name}>
+                  <option value={parent.id}>{parent.name}</option>
+                  {children.map((sub) => (
+                    <option key={sub.id} value={sub.id}>— {sub.name}</option>
+                  ))}
+                </optgroup>
+              ) : (
+                <option key={parent.id} value={parent.id}>{parent.name}</option>
+              )
+            })}
+            {categories.filter((c) => c.parentId && !categories.find((p) => p.id === c.parentId)).map((c) => (
+              <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
         </div>

@@ -231,3 +231,23 @@
 }
 
 .deleteBtn:hover { filter: hue-rotate(0deg); }
+
+.childItem {
+  margin-left: $space-6;
+  border-style: dashed;
+}
+
+.childArrow {
+  font-size: $text-xs;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.subBadge {
+  padding: 1px 6px;
+  background: rgba(37,99,235,0.1);
+  color: #2563eb;
+  border-radius: $radius-full;
+  font-size: 10px;
+  font-weight: $font-semibold;
+}

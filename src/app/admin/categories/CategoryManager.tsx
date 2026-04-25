@@ -9,7 +9,7 @@ interface Props {
 }
 
 const COLORS = ['#dc2626','#ea580c','#d97706','#16a34a','#0891b2','#2563eb','#7c3aed','#db2777','#475569']
-const DEFAULT_FORM = { name: '', description: '', color: '#2563eb', icon: '', sortOrder: 0, isActive: true }
+const DEFAULT_FORM = { name: '', description: '', color: '#2563eb', icon: '', sortOrder: 0, isActive: true, parentId: null as number | null }
 
 export function CategoryManager({ categories: initialCats }: Props) {
   const router = useRouter()
@@ -28,7 +28,7 @@ export function CategoryManager({ categories: initialCats }: Props) {
     setForm({
       name: cat.name, description: cat.description || '',
       color: cat.color || '#2563eb', icon: cat.icon || '',
-      sortOrder: cat.sortOrder, isActive: cat.isActive,
+      sortOrder: cat.sortOrder, isActive: cat.isActive, parentId: cat.parentId ?? null,
     })
     setError('')
   }
@@ -86,6 +86,40 @@ export function CategoryManager({ categories: initialCats }: Props) {
     } catch {}
   }
 
+  const topLevel = cats.filter((c) => !c.parentId)
+  const subs = cats.filter((c) => c.parentId)
+  // Parents eligible for the selector: top-level cats that aren't the one being edited
+  const parentOptions = cats.filter((c) => !c.parentId && c.id !== editing?.id)
+
+  const renderCatItem = (cat: Category, isChild = false) => (
+    <div key={cat.id} className={`${styles.catItem} ${isChild ? styles.childItem : ''} ${!cat.isActive ? styles.inactive : ''}`}>
+      {isChild && <span className={styles.childArrow}>└─</span>}
+      <div className={styles.catDot} style={{ background: cat.color || '#ccc' }} />
+      <div className={styles.catInfo}>
+        <div className={styles.catName}>
+          {cat.icon && <span>{cat.icon}</span>}
+          {cat.name}
+          {!cat.parentId && subs.some((s) => s.parentId === cat.id) && (
+            <span className={styles.subBadge}>{subs.filter((s) => s.parentId === cat.id).length} sub</span>
+          )}
+          {!cat.isActive && <span className={styles.inactiveBadge}>Inactive</span>}
+        </div>
+        {cat.description && <p className={styles.catDesc}>{cat.description}</p>}
+      </div>
+      <div className={styles.catActions}>
+        <button type="button" onClick={() => toggleActive(cat)} className={styles.iconBtn} title={cat.isActive ? 'Deactivate' : 'Activate'}>
+          {cat.isActive ? '👁' : '🚫'}
+        </button>
+        <button type="button" onClick={() => startEdit(cat)} className={styles.iconBtn} title="Edit">✏️</button>
+        <button
+          type="button" onClick={() => handleDelete(cat.id)}
+          className={`${styles.iconBtn} ${styles.deleteBtn}`}
+          disabled={deleting === cat.id} title="Delete"
+        >🗑</button>
+      </div>
+    </div>
+  )
+
   return (
     <div className={styles.layout}>
       {/* Form */}
@@ -98,6 +132,19 @@ export function CategoryManager({ categories: initialCats }: Props) {
               type="text" value={form.name} onChange={(e) => setField('name', e.target.value)}
               placeholder="Category name" className={styles.input} maxLength={100}
             />
+          </div>
+          <div className={styles.field}>
+            <label className={styles.label}>Parent Category</label>
+            <select
+              value={form.parentId ?? ''}
+              onChange={(e) => setField('parentId', e.target.value ? Number(e.target.value) : null)}
+              className={styles.input}
+            >
+              <option value="">— None (top-level) —</option>
+              {parentOptions.map((p) => (
+                <option key={p.id} value={p.id}>{p.icon ? `${p.icon} ` : ''}{p.name}</option>
+              ))}
+            </select>
           </div>
           <div className={styles.field}>
             <label className={styles.label}>Description</label>
@@ -142,9 +189,7 @@ export function CategoryManager({ categories: initialCats }: Props) {
           </label>
           {error && <p className={styles.error}>{error}</p>}
           <div className={styles.formActions}>
-            {editing && (
-              <button type="button" onClick={cancelEdit} className={styles.cancelBtn}>Cancel</button>
-            )}
+            {editing && <button type="button" onClick={cancelEdit} className={styles.cancelBtn}>Cancel</button>}
             <button type="submit" className={styles.submitBtn} disabled={isPending}>
               {isPending ? 'Saving…' : editing ? 'Save Changes' : 'Add Category'}
             </button>
@@ -152,38 +197,17 @@ export function CategoryManager({ categories: initialCats }: Props) {
         </form>
       </div>
 
-      {/* List */}
+      {/* Tree list */}
       <div className={styles.list}>
         {cats.length === 0 && <p className={styles.empty}>No categories yet.</p>}
-        {cats.map((cat) => (
-          <div key={cat.id} className={`${styles.catItem} ${!cat.isActive ? styles.inactive : ''}`}>
-            <div className={styles.catDot} style={{ background: cat.color || '#ccc' }} />
-            <div className={styles.catInfo}>
-              <div className={styles.catName}>
-                {cat.icon && <span>{cat.icon}</span>}
-                {cat.name}
-                {!cat.isActive && <span className={styles.inactiveBadge}>Inactive</span>}
-              </div>
-              {cat.description && <p className={styles.catDesc}>{cat.description}</p>}
-            </div>
-            <div className={styles.catActions}>
-              <button
-                type="button" onClick={() => toggleActive(cat)}
-                className={styles.iconBtn} title={cat.isActive ? 'Deactivate' : 'Activate'}
-              >
-                {cat.isActive ? '👁' : '🚫'}
-              </button>
-              <button type="button" onClick={() => startEdit(cat)} className={styles.iconBtn} title="Edit">✏️</button>
-              <button
-                type="button" onClick={() => handleDelete(cat.id)}
-                className={`${styles.iconBtn} ${styles.deleteBtn}`}
-                disabled={deleting === cat.id} title="Delete"
-              >
-                🗑
-              </button>
-            </div>
+        {topLevel.map((cat) => (
+          <div key={cat.id}>
+            {renderCatItem(cat)}
+            {subs.filter((s) => s.parentId === cat.id).map((sub) => renderCatItem(sub, true))}
           </div>
         ))}
+        {/* Orphaned subcategories whose parent was deleted */}
+        {subs.filter((s) => !cats.find((c) => c.id === s.parentId)).map((sub) => renderCatItem(sub))}
       </div>
     </div>
   )

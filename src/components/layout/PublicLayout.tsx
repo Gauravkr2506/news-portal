@@ -5,7 +5,7 @@ import { categories } from '@/lib/db/schema'
 import { eq, asc } from 'drizzle-orm'
 
 async function getCategories() {
-  return db.select({ name: categories.name, slug: categories.slug, color: categories.color })
+  return db.select({ id: categories.id, name: categories.name, slug: categories.slug, color: categories.color, parentId: categories.parentId })
     .from(categories)
     .where(eq(categories.isActive, true))
     .orderBy(asc(categories.sortOrder))

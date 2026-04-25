@@ -5,13 +5,61 @@
 }
 
 .header {
-  margin-bottom: $space-10;
+  margin-bottom: $space-6;
   padding-bottom: $space-6;
   border-bottom: 2px solid var(--border);
   display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $text-sm;
+  color: var(--text-muted);
+}
+
+.breadcrumbLink {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  color: var(--text-muted);
+  font-weight: $font-medium;
+  &:hover { color: var(--color-primary); }
+}
+
+.breadcrumbSep {
+  color: var(--border);
+  font-size: $text-lg;
+}
+
+.titleRow {
+  display: flex;
   align-items: center;
   gap: $space-4;
+}
+
+.subFilter {
+  display: flex;
   flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-8;
+}
+
+.subFilterLink {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-4;
+  border: 1.5px solid var(--border);
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  color: var(--text-secondary);
+  transition: all $transition-fast;
+  &:hover { border-color: var(--color-primary); color: var(--color-primary); }
 }
 
 .dot {

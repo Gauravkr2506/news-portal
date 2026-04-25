@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   try {
     await requireAdmin()
     const body = await request.json()
-    const { name, description, color, icon, isActive, sortOrder } = body
+    const { name, description, color, icon, isActive, sortOrder, parentId } = body
 
     if (!name?.trim()) return NextResponse.json({ error: 'Name is required' }, { status: 400 })
 
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
       description: description?.trim() || null,
       color: color || '#3b82f6',
       icon: icon?.trim() || null,
+      parentId: parentId ? Number(parentId) : null,
       isActive: isActive !== false,
       sortOrder: sortOrder ? Number(sortOrder) : 0,
       createdAt: now,
