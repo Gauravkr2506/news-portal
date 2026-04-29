@@ -5,6 +5,7 @@ import { articles, categories, users } from '@/lib/db/schema'
 import { eq, and, desc, sql, ilike } from 'drizzle-orm'
 import { requireAdmin } from '@/lib/dal'
 import { formatDate } from '@/lib/utils'
+import { DeleteArticleBtn } from '@/components/admin/DeleteArticleBtn'
 import styles from './page.module.scss'
 
 export const metadata: Metadata = { title: 'Articles' }
@@ -116,6 +117,7 @@ export default async function ArticlesPage({ searchParams }: Props) {
                     {a.status === 'published' && (
                       <Link href={`/article/${a.slug}`} className={styles.actionBtn} title="View" target="_blank">🔗</Link>
                     )}
+                    <DeleteArticleBtn id={a.id} title={a.title} />
                   </div>
                 </td>
               </tr>

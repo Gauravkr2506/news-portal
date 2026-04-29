@@ -1,0 +1,13 @@
+.btn {
+  font-size: 14px;
+  padding: 2px;
+  border-radius: $radius-sm;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform $transition-fast, opacity $transition-fast;
+  opacity: 0.6;
+
+  &:hover:not(:disabled) { transform: scale(1.2); opacity: 1; }
+  &:disabled { opacity: 0.3; cursor: not-allowed; }
+}
