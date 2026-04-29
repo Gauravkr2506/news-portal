@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 import { useSession, signOut } from '@/lib/auth-client'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { slugify } from '@/lib/utils'
 import styles from './Header.module.scss'
 import type { Category } from '@/lib/db/schema'
 
@@ -107,16 +108,37 @@ export function Header({ categories = [] }: HeaderProps) {
                     {session.user.name}
                   </div>
                   <hr className={styles.divider} />
+                  <Link
+                    href={`/author/${session.user.id}/${slugify(session.user.name)}`}
+                    className={styles.dropdownItem}
+                    role="menuitem"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                    My Profile
+                  </Link>
+                  <Link
+                    href="/settings/profile"
+                    className={styles.dropdownItem}
+                    role="menuitem"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Edit Profile
+                  </Link>
                   {isAdmin && (
                     <Link href="/admin/dashboard" className={styles.dropdownItem} role="menuitem" onClick={() => setShowDropdown(false)}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
                       Admin Panel
                     </Link>
                   )}
+                  <hr className={styles.divider} />
                   <button
                     className={`${styles.dropdownItem} ${styles.danger}`}
                     role="menuitem"
                     onClick={() => { signOut(); setShowDropdown(false) }}
                   >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                     Sign Out
                   </button>
                 </div>

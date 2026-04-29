@@ -7,7 +7,7 @@ import { articles, categories, users, comments } from '@/lib/db/schema'
 import { eq, and, desc, ne } from 'drizzle-orm'
 import { ShareButtons } from '@/components/news/ShareButtons'
 import { ArticleCard } from '@/components/news/ArticleCard'
-import { formatDate } from '@/lib/utils'
+import { formatDate, slugify } from '@/lib/utils'
 import styles from './page.module.scss'
 import type { ArticleWithRelations } from '@/types'
 
@@ -185,7 +185,7 @@ export default async function ArticlePage({ params }: Props) {
 
           <div className={styles.byline}>
             {article.author && (
-              <div className={styles.author}>
+              <Link href={`/author/${article.author.id}/${slugify(article.author.name)}`} className={styles.author}>
                 <div className={styles.authorAvatar}>
                   {article.author.image ? (
                     <Image src={article.author.image} alt={article.author.name} width={40} height={40} />
@@ -199,7 +199,7 @@ export default async function ArticlePage({ params }: Props) {
                     </time>
                   )}
                 </div>
-              </div>
+              </Link>
             )}
             <ShareButtons title={article.title} url={articleUrl} />
           </div>

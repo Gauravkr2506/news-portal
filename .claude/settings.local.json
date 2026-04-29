@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npx tsc *)",
       "Bash(npm run *)",
-      "Bash(xargs grep *)"
+      "Bash(xargs grep *)",
+      "Bash(mkdir -p \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]\")",
+      "Bash(mv \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/page.tsx\" \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]/page.tsx\")",
+      "Bash(mv \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/page.module.scss\" \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]/page.module.scss\")"
     ]
   }
 }

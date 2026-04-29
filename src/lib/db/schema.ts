@@ -15,6 +15,13 @@ export const users = pgTable('user', {
   banned: boolean('banned').default(false),
   banReason: text('banReason'),
   banExpires: timestamp('banExpires'),
+  // Author profile fields
+  bio: text('bio'),
+  twitterUrl: text('twitterUrl'),
+  facebookUrl: text('facebookUrl'),
+  instagramUrl: text('instagramUrl'),
+  linkedinUrl: text('linkedinUrl'),
+  websiteUrl: text('websiteUrl'),
   createdAt: timestamp('createdAt').notNull(),
   updatedAt: timestamp('updatedAt').notNull(),
 })
