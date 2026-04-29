@@ -26,7 +26,13 @@ export function ArticleCard({ article, variant = 'default', priority = false }: 
             src={coverImage}
             alt={coverImageAlt || title}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            sizes={
+              variant === 'compact'
+                ? '100px'
+                : variant === 'hero'
+                ? '(max-width: 768px) 100vw, 55vw'
+                : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+            }
             className={styles.img}
             priority={priority}
           />

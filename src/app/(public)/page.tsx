@@ -107,8 +107,35 @@ export default async function HomePage() {
   const featuredArticle = featured[0] ? mapArticle(featured[0] as unknown as Record<string, unknown>) : null
   const latestArticles = latest.map(r => mapArticle(r as unknown as Record<string, unknown>))
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://newsedition.in'
+
+  const websiteLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'NewsEdition',
+    url: siteUrl,
+    description: 'Your trusted source for breaking news, in-depth analysis, and comprehensive coverage.',
+    inLanguage: 'en',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/search?q={search_term_string}` },
+      'query-input': 'required name=search_term_string',
+    },
+  }
+
+  const organizationLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsMediaOrganization',
+    name: 'NewsEdition',
+    url: siteUrl,
+    logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png`, width: 200, height: 60 },
+    sameAs: [],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
       {breaking.length > 0 && <BreakingTicker articles={breaking} />}
 
       <div className={styles.page}>

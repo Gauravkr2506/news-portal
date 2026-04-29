@@ -137,23 +137,41 @@ export default async function ArticlePage({ params }: Props) {
     '@type': 'NewsArticle',
     headline: article.title,
     description: article.excerpt || '',
-    image: article.coverImage ? [article.coverImage] : [],
+    image: article.coverImage
+      ? [{ '@type': 'ImageObject', url: article.coverImage, width: 1200, height: 630, caption: article.coverImageAlt || article.title }]
+      : [],
     datePublished: article.publishedAt?.toISOString(),
     dateModified: article.updatedAt?.toISOString(),
-    author: article.author ? [{ '@type': 'Person', name: article.author.name }] : [],
+    inLanguage: 'en',
+    author: article.author
+      ? [{ '@type': 'Person', name: article.author.name, url: `${siteUrl}/author/${article.author.id}/${slugify(article.author.name)}` }]
+      : [],
     publisher: {
-      '@type': 'Organization',
+      '@type': 'NewsMediaOrganization',
       name: 'NewsEdition',
-      logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png` },
+      url: siteUrl,
+      logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png`, width: 200, height: 60 },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
+    url: articleUrl,
     keywords: article.tags?.join(', '),
     articleSection: article.category?.name,
+  }
+
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+      ...(article.category ? [{ '@type': 'ListItem', position: 2, name: article.category.name, item: `${siteUrl}/${article.category.slug}` }] : []),
+      { '@type': 'ListItem', position: article.category ? 3 : 2, name: article.title, item: articleUrl },
+    ],
   }
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       <div className={styles.page}>
         <article className={styles.article}>
@@ -212,6 +230,7 @@ export default async function ArticlePage({ params }: Props) {
                 alt={article.coverImageAlt || article.title}
                 width={1200}
                 height={630}
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 75vw, 800px"
                 priority
                 className={styles.img}
               />

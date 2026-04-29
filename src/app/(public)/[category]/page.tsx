@@ -102,7 +102,39 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const hasMore = rows.length === PAGE_SIZE
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://newsedition.in'
+  const catUrl = `${siteUrl}/${slug}`
+
+  const breadcrumbItems = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    ...(parentCat ? [{ '@type': 'ListItem', position: 2, name: parentCat.name, item: `${siteUrl}/${parentCat.slug}` }] : []),
+    { '@type': 'ListItem', position: parentCat ? 3 : 2, name: cat.name, item: catUrl },
+  ]
+
+  const collectionLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${cat.name} News`,
+    description: cat.description || `Latest ${cat.name} news and updates from NewsEdition.`,
+    url: catUrl,
+    inLanguage: 'en',
+    breadcrumb: { '@type': 'BreadcrumbList', itemListElement: breadcrumbItems },
+    ...(articlesList.length > 0 && {
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: articlesList.slice(0, 10).map((a, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          url: `${siteUrl}/article/${a.slug}`,
+          name: a.title,
+        })),
+      },
+    }),
+  }
+
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionLd) }} />
     <div className={styles.page}>
       <div className={styles.header}>
         {parentCat && (
@@ -158,5 +190,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         </div>
       )}
     </div>
+    </>
   )
 }

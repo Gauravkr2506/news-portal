@@ -73,6 +73,22 @@ export default async function AuthorPage({ params }: Props) {
   const isOwnProfile = session?.user?.id === author.id
   const initial = author.name.charAt(0).toUpperCase()
   const roleLabel = author.role === 'owner' ? 'Editor-in-Chief' : author.role === 'admin' ? 'Editor' : 'Contributor'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://newsedition.in'
+  const authorUrl = `${siteUrl}/author/${author.id}/${canonical}`
+
+  const sameAs = [author.twitterUrl, author.facebookUrl, author.instagramUrl, author.linkedinUrl, author.websiteUrl].filter(Boolean)
+
+  const personLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: author.name,
+    url: authorUrl,
+    ...(author.image && { image: { '@type': 'ImageObject', url: author.image } }),
+    ...(author.bio && { description: author.bio }),
+    jobTitle: roleLabel,
+    worksFor: { '@type': 'NewsMediaOrganization', name: 'NewsEdition', url: siteUrl },
+    ...(sameAs.length > 0 && { sameAs }),
+  }
 
   const socialLinks = [
     { url: author.twitterUrl, label: 'X (Twitter)', icon: (
@@ -93,6 +109,8 @@ export default async function AuthorPage({ params }: Props) {
   ].filter((s) => s.url)
 
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }} />
     <div className={styles.page}>
       {/* Hero */}
       <div className={styles.hero}>
@@ -180,5 +198,6 @@ export default async function AuthorPage({ params }: Props) {
         </div>
       )}
     </div>
+    </>
   )
 }
