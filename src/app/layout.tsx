@@ -45,6 +45,7 @@ export const metadata: Metadata = {
     site: '@newsedition',
   },
   alternates: { canonical: siteUrl },
+  verification: { google: '8Iz3f_2karh5jShQV1mprOLbpZ_Fvs3ZpOAP1HICFBc' },
 }
 
 export const viewport: Viewport = {
