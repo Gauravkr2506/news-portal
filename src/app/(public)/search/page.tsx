@@ -66,7 +66,7 @@ export default async function SearchPage({ searchParams }: Props) {
         <h1 className={styles.title}>
           {query ? `Results for "${query}"` : 'Search'}
         </h1>
-        {query && <p className={styles.count}>{results.length} article{results.length !== 1 ? 's' : ''} found</p>}
+        {query && <p className={styles.count}>{results.length} {results.length !== 1 ? 'articles found' : 'article found'}</p>}
       </div>
 
       <form className={styles.searchForm} method="get">
@@ -78,7 +78,7 @@ export default async function SearchPage({ searchParams }: Props) {
             name="q"
             type="search"
             defaultValue={query}
-            placeholder="Search articles…"
+            placeholder="Search articles..."
             className={styles.searchInput}
             autoFocus
           />
@@ -91,12 +91,12 @@ export default async function SearchPage({ searchParams }: Props) {
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
           </svg>
-          <p>Enter a keyword to search articles</p>
+          <p>Type something to search for articles.</p>
         </div>
       ) : results.length === 0 ? (
         <div className={styles.empty}>
-          <p>No articles found{query ? ` for "${query}"` : ''}.</p>
-          <p className={styles.emptyHint}>Try different keywords or browse by category.</p>
+          <p>No results{query ? ` for "${query}"` : ''}.</p>
+          <p className={styles.emptyHint}>Try a different search term.</p>
         </div>
       ) : (
         <div className={styles.grid}>

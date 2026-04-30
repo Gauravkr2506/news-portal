@@ -3,6 +3,8 @@
   max-width: 680px;
   padding-top: $space-10;
   padding-bottom: $space-16;
+
+  @include max-sm { padding-top: $space-6; padding-bottom: $space-8; }
 }
 
 .title {
@@ -10,6 +12,8 @@
   font-weight: $font-extrabold;
   color: var(--text-primary);
   margin-bottom: $space-8;
+
+  @include max-sm { font-size: $text-2xl; margin-bottom: $space-5; }
 }
 
 .form {

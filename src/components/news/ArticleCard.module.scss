@@ -152,6 +152,13 @@
   @include max-md {
     flex-direction: column;
     .imageWrapper { flex: none; aspect-ratio: 16 / 10; min-height: auto; }
+    .body { padding: $space-4; }
+    .title { font-size: $text-2xl; }
+  }
+
+  @include max-sm {
+    .body { padding: $space-3; }
+    .title { font-size: $text-xl; }
   }
 }
 

@@ -185,7 +185,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         </>
       ) : (
         <div className={styles.empty}>
-          <p>No articles in this category yet. Check back soon!</p>
+          <p>No articles in this category yet.</p>
           <Link href="/" className={styles.backLink}>← Back to Home</Link>
         </div>
       )}

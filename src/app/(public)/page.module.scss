@@ -2,6 +2,8 @@
   @include container;
   padding-top: $space-6;
   padding-bottom: $space-16;
+
+  @include max-sm { padding-bottom: $space-8; }
 }
 
 .hero {
@@ -33,6 +35,8 @@
   color: var(--text-primary);
   position: relative;
   padding-left: $space-4;
+
+  @include max-sm { font-size: $text-xl; }
 
   &::before {
     content: '';
@@ -71,6 +75,8 @@
   font-size: $text-lg;
   border: 2px dashed var(--border);
   border-radius: $radius-2xl;
+
+  @include max-sm { padding: $space-8 $space-4; font-size: $text-base; }
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────

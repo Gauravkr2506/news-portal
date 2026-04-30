@@ -2,6 +2,8 @@
   @include container;
   padding-top: $space-10;
   padding-bottom: $space-16;
+
+  @include max-sm { padding-top: $space-6; padding-bottom: $space-8; }
 }
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
@@ -50,6 +52,8 @@
   font-weight: $font-extrabold;
   color: var(--text-primary);
   line-height: 1.1;
+
+  @include max-sm { font-size: $text-2xl; }
 }
 
 .editBtn {
@@ -183,6 +187,8 @@
   flex-direction: column;
   align-items: center;
   gap: $space-4;
+
+  @include max-sm { padding: $space-8 $space-4; }
 }
 
 .backLink {

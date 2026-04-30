@@ -11,7 +11,7 @@ export function CommentFormInline({ articleId }: { articleId: number }) {
   if (state?.success) {
     return (
       <div className={styles.commentSuccess}>
-        Your comment has been submitted and is awaiting moderation.
+        Your comment has been submitted and is awaiting approval.
       </div>
     )
   }

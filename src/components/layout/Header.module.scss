@@ -7,6 +7,7 @@
   box-shadow: $shadow-sm;
 }
 
+// ─── Top bar ──────────────────────────────────────────────────────────────────
 .topBar {
   background: var(--color-primary);
   padding: $space-1 0;
@@ -27,6 +28,7 @@
 
   .topLinks {
     display: flex;
+    align-items: center;
     gap: $space-4;
     @include max-md { margin-left: auto; }
 
@@ -39,6 +41,7 @@
   }
 }
 
+// ─── Main nav ─────────────────────────────────────────────────────────────────
 .mainNav {
   @include container;
   @include flex-between;
@@ -58,6 +61,8 @@
     color: var(--color-primary);
     letter-spacing: -0.03em;
     line-height: 1.1;
+
+    @include max-sm { font-size: $text-lg; }
   }
 
   .logoTagline {
@@ -69,6 +74,7 @@
   }
 }
 
+// Desktop nav links (hidden on mobile)
 .navLinks {
   display: none;
   gap: $space-1;
@@ -96,7 +102,6 @@
 
 .navItem {
   position: relative;
-
   &:hover .subMenu { display: block; }
 }
 
@@ -152,17 +157,21 @@
   }
 }
 
-.mobileSub {
-  padding-left: $space-8 !important;
-  font-size: $text-base !important;
-  color: var(--text-muted) !important;
-  font-weight: $font-normal !important;
-}
-
+// ─── Actions ──────────────────────────────────────────────────────────────────
 .actions {
   display: flex;
   align-items: center;
   gap: $space-3;
+  flex-shrink: 0;
+}
+
+// Desktop-only action items — hidden on mobile
+.desktopActions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+
+  @include max-lg { display: none; }
 }
 
 .searchBtn {
@@ -179,7 +188,6 @@
 }
 
 .authLink {
-  display: none;
   padding: $space-2 $space-4;
   border-radius: $radius-full;
   font-size: $text-sm;
@@ -187,8 +195,9 @@
   background: var(--color-primary);
   color: #fff;
   transition: background $transition-fast;
+  display: flex;
+  align-items: center;
 
-  @include sm { display: flex; align-items: center; }
   &:hover { background: var(--color-primary-dark); }
 }
 
@@ -257,6 +266,7 @@
   }
 }
 
+// Hamburger — visible only below lg
 .mobileMenuBtn {
   @include flex-center;
   width: 36px;
@@ -264,48 +274,13 @@
   border-radius: $radius-md;
   color: var(--text-secondary);
   transition: all $transition-fast;
+  flex-shrink: 0;
 
   @include lg { display: none; }
   &:hover { background: var(--bg-surface); }
 }
 
-.mobileMenu {
-  position: fixed;
-  inset: 0;
-  top: 0;
-  z-index: $z-modal;
-  background: var(--bg);
-  padding: $space-6;
-  display: flex;
-  flex-direction: column;
-  gap: $space-3;
-  animation: slideIn 0.2s ease;
-
-  @include lg { display: none; }
-
-  @keyframes slideIn {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
-  }
-
-  .mobileClose {
-    @include flex-between;
-    margin-bottom: $space-4;
-  }
-
-  a {
-    display: block;
-    padding: $space-3 $space-4;
-    font-size: $text-lg;
-    font-weight: $font-medium;
-    color: var(--text-secondary);
-    border-radius: $radius-xl;
-    transition: all $transition-fast;
-
-    &:hover { color: var(--color-primary); background: var(--bg-surface); }
-  }
-}
-
+// ─── Category bar ─────────────────────────────────────────────────────────────
 .categoryBar {
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
@@ -335,4 +310,201 @@
 
     &:hover { color: #fff; background: var(--color-primary); }
   }
+}
+
+// ─── Mobile menu ──────────────────────────────────────────────────────────────
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  z-index: $z-modal;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.22s ease;
+
+  @include lg { display: none; }
+
+  @keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+}
+
+.mobileMenuHeader {
+  @include flex-between;
+  padding: 0 $space-4;
+  height: $header-height;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.mobileCloseBtn {
+  @include flex-center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  transition: all $transition-fast;
+
+  &:hover { background: var(--border); }
+}
+
+// Scrollable content area
+.mobileMenuBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+// User card
+.mobileUserSection {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  margin-bottom: $space-2;
+}
+
+.mobileUserInfo {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-2;
+  padding-bottom: $space-3;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobileUserAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-full;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: $text-xl;
+  font-weight: $font-bold;
+  @include flex-center;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img { @include img-cover; }
+}
+
+.mobileUserName {
+  font-size: $text-sm;
+  font-weight: $font-bold;
+  color: var(--text-primary);
+}
+
+.mobileUserRole {
+  font-size: $text-xs;
+  color: var(--color-primary);
+  font-weight: $font-medium;
+}
+
+.mobileUserLink {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-2;
+  border-radius: $radius-lg;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+  transition: all $transition-fast;
+  text-decoration: none;
+
+  &:hover { color: var(--color-primary); background: rgba(220,38,38,0.05); }
+}
+
+.mobileSignIn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-3;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: $radius-xl;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  text-decoration: none;
+  transition: background $transition-fast;
+  margin-bottom: $space-2;
+
+  &:hover { background: var(--color-primary-dark); }
+}
+
+// Theme row
+.mobileThemeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-3 $space-2;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+}
+
+.mobileDivider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: $space-1 0;
+}
+
+// Nav links list
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-2;
+  font-size: $text-base;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+  border-radius: $radius-lg;
+  transition: all $transition-fast;
+  text-decoration: none;
+
+  &:hover { color: var(--color-primary); background: rgba(220,38,38,0.05); }
+}
+
+.mobileSubLink {
+  display: flex;
+  align-items: center;
+  padding: $space-2 $space-2 $space-2 $space-10;
+  font-size: $text-sm;
+  color: var(--text-muted);
+  border-radius: $radius-lg;
+  transition: all $transition-fast;
+  text-decoration: none;
+
+  &:hover { color: var(--color-primary); background: rgba(220,38,38,0.05); }
+}
+
+// Sign out
+.mobileSignOut {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-2;
+  font-size: $text-base;
+  font-weight: $font-medium;
+  color: #dc2626;
+  border-radius: $radius-lg;
+  width: 100%;
+  text-align: left;
+  transition: background $transition-fast;
+
+  &:hover { background: rgba(220,38,38,0.06); }
 }

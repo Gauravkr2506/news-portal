@@ -18,6 +18,8 @@
   font-size: $text-3xl;
   font-weight: $font-extrabold;
   color: var(--text-primary);
+
+  @include max-sm { font-size: $text-2xl; }
 }
 
 .count {
@@ -83,6 +85,8 @@
 
   svg { opacity: 0.3; }
   p { font-size: $text-lg; margin: 0; }
+
+  @include max-sm { padding: $space-8 $space-4; p { font-size: $text-base; } }
 }
 
 .emptyHint {

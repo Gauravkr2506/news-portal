@@ -119,6 +119,20 @@ button {
   h3 { font-size: $text-2xl; }
   h4 { font-size: $text-xl; }
 
+  @include max-sm {
+    font-size: $text-base;
+    h1 { font-size: $text-2xl; }
+    h2 { font-size: $text-xl; }
+    h3 { font-size: $text-lg; }
+    h4 { font-size: $text-base; }
+
+    blockquote { font-size: $text-base; padding: $space-3 $space-4; }
+
+    pre { padding: $space-4; }
+
+    ul, ol { padding-left: $space-4; }
+  }
+
   p {
     margin-bottom: $space-6;
   }

@@ -2,6 +2,8 @@
   @include container;
   padding-top: $space-8;
   padding-bottom: $space-16;
+
+  @include max-sm { padding-top: $space-5; padding-bottom: $space-8; }
 }
 
 .header {
@@ -73,6 +75,8 @@
   font-size: $text-4xl;
   font-weight: $font-extrabold;
   color: var(--text-primary);
+
+  @include max-sm { font-size: $text-2xl; }
 }
 
 .description {
@@ -80,6 +84,8 @@
   font-size: $text-lg;
   color: var(--text-secondary);
   margin-top: $space-2;
+
+  @include max-sm { font-size: $text-base; }
 }
 
 .grid {
@@ -124,6 +130,8 @@
   flex-direction: column;
   align-items: center;
   gap: $space-4;
+
+  @include max-sm { padding: $space-8 $space-4; }
 }
 
 .backLink {

@@ -153,7 +153,7 @@ export default async function HomePage() {
           <section className={styles.latest} aria-label="Latest news">
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Latest News</h2>
-              <Link href="/search" className={styles.sectionLink}>View all →</Link>
+              <Link href="/search" className={styles.sectionLink}>View All</Link>
             </div>
             <div className={styles.grid}>
               {latestArticles.slice(0, 9).map((article, i) => (
@@ -162,7 +162,7 @@ export default async function HomePage() {
             </div>
             {latestArticles.length === 0 && (
               <div className={styles.empty}>
-                <p>No articles published yet. Check back soon!</p>
+                <p>No articles published yet.</p>
               </div>
             )}
           </section>
