@@ -6,7 +6,8 @@
       "Bash(xargs grep *)",
       "Bash(mkdir -p \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]\")",
       "Bash(mv \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/page.tsx\" \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]/page.tsx\")",
-      "Bash(mv \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/page.module.scss\" \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]/page.module.scss\")"
+      "Bash(mv \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/page.module.scss\" \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]/page.module.scss\")",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomUUID\\(\\).replace\\(/-/g,''\\)\\)\")"
     ]
   }
 }

@@ -5,6 +5,7 @@ import { articles } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 import { slugify } from '@/lib/utils'
 import { deleteFromCloudinary } from '@/lib/cloudinary'
+import { notifyIndexing } from '@/lib/googleIndexing'
 
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -55,6 +56,20 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       updatedAt: new Date(),
     }).where(eq(articles.id, articleId)).returning()
 
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://newsedition.in'
+    const articleUrl = `${siteUrl}/article/${updated.slug}`
+
+    if (becomingPublished) {
+      // Draft/preview → published
+      notifyIndexing(articleUrl, 'URL_UPDATED')
+    } else if (wasPublished && updated.status !== 'published') {
+      // Published → unpublished (draft/preview)
+      notifyIndexing(articleUrl, 'URL_DELETED')
+    } else if (wasPublished && updated.status === 'published') {
+      // Published → still published (content updated)
+      notifyIndexing(articleUrl, 'URL_UPDATED')
+    }
+
     return NextResponse.json({ id: updated.id, slug: updated.slug })
   } catch (error) {
     console.error('Update article error:', error)
@@ -77,6 +92,12 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     }
 
     await db.delete(articles).where(eq(articles.id, articleId))
+
+    if (existing.status === 'published') {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://newsedition.in'
+      notifyIndexing(`${siteUrl}/article/${existing.slug}`, 'URL_DELETED')
+    }
+
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Delete article error:', error)

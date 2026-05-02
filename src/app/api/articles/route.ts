@@ -4,6 +4,7 @@ import { db } from '@/lib/db'
 import { articles, categories } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 import { slugify } from '@/lib/utils'
+import { notifyIndexing } from '@/lib/googleIndexing'
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,6 +49,11 @@ export async function POST(request: NextRequest) {
       createdAt: now,
       updatedAt: now,
     }).returning()
+
+    if (article.status === 'published') {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://newsedition.in'
+      notifyIndexing(`${siteUrl}/article/${article.slug}`, 'URL_UPDATED')
+    }
 
     return NextResponse.json({ id: article.id, slug: article.slug })
   } catch (error) {
