@@ -131,6 +131,17 @@ export const assets = pgTable('assets', {
   createdAt: timestamp('createdAt').defaultNow().notNull(),
 })
 
+// ─── Home Sections ────────────────────────────────────────────────────────────
+export const homeSections = pgTable('home_sections', {
+  id: serial('id').primaryKey(),
+  categoryId: integer('categoryId').notNull().references(() => categories.id, { onDelete: 'cascade' }),
+  title: varchar('title', { length: 100 }).notNull(),
+  articleCount: integer('articleCount').notNull().default(3),
+  sortOrder: integer('sortOrder').notNull().default(0),
+  isActive: boolean('isActive').notNull().default(true),
+  createdAt: timestamp('createdAt').defaultNow().notNull(),
+})
+
 // ─── Type Exports ─────────────────────────────────────────────────────────────
 export type User = typeof users.$inferSelect
 export type Session = typeof sessions.$inferSelect
@@ -138,8 +149,10 @@ export type Category = typeof categories.$inferSelect
 export type Article = typeof articles.$inferSelect
 export type Comment = typeof comments.$inferSelect
 export type Asset = typeof assets.$inferSelect
+export type HomeSection = typeof homeSections.$inferSelect
 
 export type NewCategory = typeof categories.$inferInsert
 export type NewArticle = typeof articles.$inferInsert
 export type NewComment = typeof comments.$inferInsert
 export type NewAsset = typeof assets.$inferInsert
+export type NewHomeSection = typeof homeSections.$inferInsert

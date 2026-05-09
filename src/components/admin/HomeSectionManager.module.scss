@@ -1,0 +1,268 @@
+.manager {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+// ─── Section list ──────────────────────────────────────────────────────────────
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.empty {
+  padding: $space-10 $space-6;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: $text-sm;
+  border: 2px dashed var(--border);
+  border-radius: $radius-xl;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  transition: opacity $transition-fast;
+
+  @include max-sm {
+    flex-wrap: wrap;
+    gap: $space-2;
+  }
+}
+
+.dimmed {
+  opacity: 0.5;
+}
+
+// ─── Order buttons ─────────────────────────────────────────────────────────────
+
+.orderBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.arrowBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover:not(:disabled) {
+    background: var(--border);
+    color: var(--text-primary);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+// ─── Color dot ────────────────────────────────────────────────────────────────
+
+.colorDot {
+  width: 10px;
+  height: 10px;
+  border-radius: $radius-full;
+  flex-shrink: 0;
+}
+
+// ─── Info ─────────────────────────────────────────────────────────────────────
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.rowTitle {
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  color: var(--text-primary);
+  @include truncate;
+}
+
+.rowMeta {
+  font-size: $text-xs;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+// ─── Controls ─────────────────────────────────────────────────────────────────
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-shrink: 0;
+
+  @include max-sm { margin-left: 37px; } // align under info
+}
+
+.countSelect {
+  padding: $space-1 $space-2;
+  font-size: $text-xs;
+  font-weight: $font-medium;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: $radius-lg;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.toggleBtn {
+  padding: $space-1 $space-3;
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  border-radius: $radius-full;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &.on {
+    background: rgba(22, 163, 74, 0.1);
+    color: #16a34a;
+    border-color: rgba(22, 163, 74, 0.3);
+  }
+
+  &.off {
+    background: var(--bg-secondary);
+    color: var(--text-muted);
+    border-color: var(--border);
+  }
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: $radius-lg;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    background: rgba(220, 38, 38, 0.08);
+    border-color: rgba(220, 38, 38, 0.3);
+    color: #dc2626;
+  }
+}
+
+// ─── Add form ─────────────────────────────────────────────────────────────────
+
+.addForm {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+  padding: $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.formFields {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: $space-3;
+
+  @include max-sm { grid-template-columns: 1fr; }
+}
+
+.formSelect,
+.formInput {
+  padding: $space-2 $space-3;
+  font-size: $text-sm;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: $radius-lg;
+  color: var(--text-primary);
+  transition: border-color $transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  &::placeholder { color: var(--text-muted); }
+}
+
+.formActions {
+  display: flex;
+  gap: $space-3;
+}
+
+.saveBtn {
+  padding: $space-2 $space-6;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover:not(:disabled) { background: var(--color-primary-dark); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+.cancelBtn {
+  padding: $space-2 $space-5;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover { background: var(--bg); color: var(--text-primary); }
+}
+
+// ─── New section button ────────────────────────────────────────────────────────
+
+.newBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-5;
+  background: var(--bg);
+  border: 1.5px dashed var(--border);
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all $transition-fast;
+  align-self: flex-start;
+
+  &:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

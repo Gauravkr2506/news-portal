@@ -64,7 +64,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" suppressHydrationWarning data-theme={theme} className={inter.variable}>
-      <head>
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-72K18E5MZS"
           strategy="afterInteractive"
@@ -77,11 +80,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             gtag('config', 'G-72K18E5MZS');
           `}
         </Script>
-      </head>
-      <body>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
       </body>
     </html>
   )
