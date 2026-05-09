@@ -16,6 +16,13 @@
   color: var(--text-primary);
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
 .newBtn {
   display: flex;
   align-items: center;

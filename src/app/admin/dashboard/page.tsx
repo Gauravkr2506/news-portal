@@ -4,6 +4,7 @@ import { db } from '@/lib/db'
 import { articles, categories, comments, assets, users } from '@/lib/db/schema'
 import { eq, count, sql } from 'drizzle-orm'
 import { requireAdmin } from '@/lib/dal'
+import IndexingButton from '@/components/admin/IndexingButton'
 import styles from './page.module.scss'
 
 export const metadata: Metadata = { title: 'Dashboard' }
@@ -47,8 +48,9 @@ async function getRecentComments() {
 }
 
 export default async function DashboardPage() {
-  await requireAdmin()
+  const session = await requireAdmin()
   const [stats, recentArticles, recentComments] = await Promise.all([getStats(), getRecentArticles(), getRecentComments()])
+  const canIndex = session.user.email === 'newsedition1@gmail.com'
 
   const statCards = [
     { label: 'Total Articles', value: stats.totalArticles, href: '/admin/articles', color: '#2563eb' },
@@ -65,10 +67,13 @@ export default async function DashboardPage() {
     <div className={styles.page}>
       <div className={styles.header}>
         <h1 className={styles.title}>Dashboard</h1>
-        <Link href="/admin/articles/new" className={styles.newBtn}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          New Article
-        </Link>
+        <div className={styles.headerActions}>
+          {canIndex && <IndexingButton />}
+          <Link href="/admin/articles/new" className={styles.newBtn}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Article
+          </Link>
+        </div>
       </div>
 
       <div className={styles.statsGrid}>
