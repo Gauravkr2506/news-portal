@@ -1,0 +1,391 @@
+.page {
+  @include container;
+  padding-top: $space-12;
+  padding-bottom: $space-16;
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+.hero {
+  max-width: 760px;
+  margin-bottom: $space-12;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: $text-xs;
+  font-weight: $font-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  margin-bottom: $space-3;
+}
+
+.title {
+  font-size: $text-4xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+  line-height: 1.15;
+  margin-bottom: $space-5;
+
+  @include max-sm { font-size: $text-3xl; }
+}
+
+.lead {
+  font-size: $text-lg;
+  color: var(--text-secondary);
+  line-height: 1.75;
+
+  @include max-sm { font-size: $text-base; }
+}
+
+.updated {
+  margin-top: $space-4;
+  font-size: $text-sm;
+  color: var(--text-muted);
+}
+
+// ─── Sections ─────────────────────────────────────────────────────────────────
+
+.section {
+  max-width: 760px;
+  margin-bottom: $space-10;
+}
+
+.sectionTitle {
+  font-size: $text-xl;
+  font-weight: $font-bold;
+  color: var(--text-primary);
+  margin-bottom: $space-5;
+  padding-bottom: $space-3;
+  border-bottom: 2px solid var(--border);
+}
+
+.body {
+  font-size: $text-base;
+  color: var(--text-secondary);
+  line-height: 1.8;
+
+  p { margin-bottom: $space-4; &:last-child { margin-bottom: 0; } }
+  ul, ol { padding-left: $space-6; margin-bottom: $space-4; }
+  li { margin-bottom: $space-2; }
+  a { color: var(--color-primary); }
+  strong { color: var(--text-primary); font-weight: $font-semibold; }
+  h3 {
+    font-size: $text-base;
+    font-weight: $font-bold;
+    color: var(--text-primary);
+    margin: $space-6 0 $space-3;
+  }
+}
+
+// ─── Stats (About) ────────────────────────────────────────────────────────────
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+  margin-bottom: $space-12;
+
+  @include sm { grid-template-columns: repeat(4, 1fr); }
+}
+
+.stat {
+  text-align: center;
+  padding: $space-6 $space-4;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+}
+
+.statValue {
+  font-size: $text-3xl;
+  font-weight: $font-extrabold;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: $space-2;
+}
+
+.statLabel {
+  font-size: $text-xs;
+  font-weight: $font-medium;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+// ─── Team (About) ─────────────────────────────────────────────────────────────
+
+.teamCard {
+  display: flex;
+  align-items: center;
+  gap: $space-5;
+  padding: $space-6;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+}
+
+.teamAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $text-2xl;
+  font-weight: $font-extrabold;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.teamName {
+  font-size: $text-lg;
+  font-weight: $font-bold;
+  color: var(--text-primary);
+}
+
+.teamRole {
+  font-size: $text-sm;
+  color: var(--text-muted);
+  margin-top: $space-1;
+}
+
+// ─── Social links ─────────────────────────────────────────────────────────────
+
+.social {
+  display: flex;
+  gap: $space-3;
+  flex-wrap: wrap;
+  margin-top: $space-2;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover { border-color: var(--color-primary); color: var(--color-primary); }
+}
+
+.socialDead {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-medium;
+  color: var(--text-muted);
+  opacity: 0.45;
+  cursor: default;
+}
+
+// ─── Contact ──────────────────────────────────────────────────────────────────
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+
+  @include sm { grid-template-columns: repeat(2, 1fr); }
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-4;
+  padding: $space-5;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-xl;
+}
+
+.contactIconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-lg;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.contactLabel {
+  font-size: $text-xs;
+  font-weight: $font-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: $space-1;
+}
+
+.contactValue {
+  font-size: $text-sm;
+  color: var(--text-primary);
+  font-weight: $font-medium;
+  line-height: 1.6;
+
+  a {
+    color: var(--text-primary);
+    text-decoration: none;
+    &:hover { color: var(--color-primary); }
+  }
+}
+
+// ─── Advertise ────────────────────────────────────────────────────────────────
+
+.perksGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-4;
+
+  @include sm { grid-template-columns: repeat(3, 1fr); }
+}
+
+.perkCard {
+  padding: $space-6;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+}
+
+.perkIcon {
+  font-size: $text-3xl;
+  margin-bottom: $space-3;
+}
+
+.perkTitle {
+  font-size: $text-base;
+  font-weight: $font-bold;
+  color: var(--text-primary);
+  margin-bottom: $space-2;
+}
+
+.perkDesc {
+  font-size: $text-sm;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.ctaBox {
+  padding: $space-8;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: $text-2xl;
+  font-weight: $font-extrabold;
+  color: var(--text-primary);
+  margin-bottom: $space-3;
+}
+
+.ctaDesc {
+  font-size: $text-base;
+  color: var(--text-secondary);
+  margin-bottom: $space-6;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-8;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: $radius-full;
+  font-size: $text-base;
+  font-weight: $font-semibold;
+  text-decoration: none;
+  transition: background $transition-fast;
+
+  &:hover { background: var(--color-primary-dark); }
+}
+
+// ─── Careers ──────────────────────────────────────────────────────────────────
+
+.jobs {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.jobCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $space-5;
+  flex-wrap: wrap;
+  padding: $space-6;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: $radius-2xl;
+}
+
+.jobInfo { flex: 1; }
+
+.jobTitle {
+  font-size: $text-lg;
+  font-weight: $font-bold;
+  color: var(--text-primary);
+  margin-bottom: $space-3;
+}
+
+.jobDesc {
+  font-size: $text-sm;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: $space-4;
+}
+
+.jobTags {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.jobTag {
+  font-size: $text-xs;
+  font-weight: $font-semibold;
+  padding: 3px 10px;
+  border-radius: $radius-full;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.applyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-6;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: $radius-full;
+  font-size: $text-sm;
+  font-weight: $font-semibold;
+  text-decoration: none;
+  transition: background $transition-fast;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+
+  &:hover { background: var(--color-primary-dark); }
+}
