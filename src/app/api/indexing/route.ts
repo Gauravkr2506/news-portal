@@ -10,18 +10,24 @@ const ALLOWED_EMAIL = 'newsedition1@gmail.com'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? ''
 
 export async function POST() {
+  console.log('[indexing] Request received')
+
   const session = await auth.api.getSession({ headers: await headers() })
   if (!session || session.user.email !== ALLOWED_EMAIL) {
+    console.warn('[indexing] Forbidden — user:', session?.user.email ?? 'unauthenticated')
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
+  console.log('[indexing] Authorized as', session.user.email)
 
   const clientId = process.env.GOOGLE_INDEXING_CLIENT_ID
   const clientSecret = process.env.GOOGLE_INDEXING_CLIENT_SECRET
   const refreshToken = process.env.GOOGLE_INDEXING_REFRESH_TOKEN
 
   if (!clientId || !clientSecret || !refreshToken) {
+    console.error('[indexing] Missing env vars — clientId:', !!clientId, '| clientSecret:', !!clientSecret, '| refreshToken:', !!refreshToken)
     return NextResponse.json({ error: 'Google Indexing API not configured' }, { status: 500 })
   }
+  console.log('[indexing] OAuth credentials present')
 
   const oauth2Client = new google.auth.OAuth2(clientId, clientSecret)
   oauth2Client.setCredentials({ refresh_token: refreshToken })
@@ -39,12 +45,14 @@ export async function POST() {
       .from(categories)
       .where(eq(categories.isActive, true)),
   ])
+  console.log('[indexing] DB query done — articles:', publishedArticles.length, '| categories:', activeCategories.length)
 
   const urls = [
     SITE_URL,
     ...publishedArticles.map(a => `${SITE_URL}/article/${a.slug}`),
     ...activeCategories.map(c => `${SITE_URL}/${c.slug}`),
   ]
+  console.log('[indexing] Submitting', urls.length, 'URLs to Google Indexing API')
 
   const results = await Promise.allSettled(
     urls.map(url =>
@@ -55,7 +63,15 @@ export async function POST() {
   )
 
   const succeeded = results.filter(r => r.status === 'fulfilled').length
-  const failed = results.filter(r => r.status === 'rejected').length
+  const failed = results.filter(r => r.status === 'rejected')
 
-  return NextResponse.json({ submitted: urls.length, succeeded, failed })
+  if (failed.length > 0) {
+    failed.forEach((r, i) => {
+      const err = (r as PromiseRejectedResult).reason
+      console.error(`[indexing] Failed URL #${i + 1}:`, err?.message ?? err)
+    })
+  }
+
+  console.log(`[indexing] Done — succeeded: ${succeeded}, failed: ${failed.length}`)
+  return NextResponse.json({ submitted: urls.length, succeeded, failed: failed.length })
 }
