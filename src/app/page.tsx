@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { db } from '@/lib/db'
-import { articles, categories, users } from '@/lib/db/schema'
-import { eq, desc, and, sql } from 'drizzle-orm'
+import { articles, categories, users, homeSections } from '@/lib/db/schema'
+import { eq, desc, and, sql, asc } from 'drizzle-orm'
 import { PublicLayout } from '@/components/layout/PublicLayout'
 import { ArticleCard } from '@/components/news/ArticleCard'
 import { BreakingTicker } from '@/components/news/BreakingTicker'
@@ -14,10 +14,25 @@ export const metadata: Metadata = {
   description: 'Your trusted source for breaking news, in-depth analysis, and comprehensive coverage.',
 }
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
+
+const ARTICLE_FIELDS = {
+  id: articles.id, title: articles.title, slug: articles.slug,
+  excerpt: articles.excerpt, coverImage: articles.coverImage,
+  coverImageAlt: articles.coverImageAlt, coverImagePublicId: articles.coverImagePublicId,
+  status: articles.status, isFeatured: articles.isFeatured,
+  isBreaking: articles.isBreaking, tags: articles.tags,
+  seoTitle: articles.seoTitle, seoDescription: articles.seoDescription,
+  viewCount: articles.viewCount, publishedAt: articles.publishedAt,
+  createdAt: articles.createdAt, updatedAt: articles.updatedAt,
+  content: articles.content,
+  categoryId: categories.id, categoryName: categories.name,
+  categorySlug: categories.slug, categoryColor: categories.color,
+  authorId: users.id, authorName: users.name, authorImage: users.image,
+}
 
 async function getHomeData() {
-  const [breaking, featured, latest, cats] = await Promise.all([
+  const [breaking, featured, latest, cats, sectionDefs] = await Promise.all([
     db.select({ id: articles.id, title: articles.title, slug: articles.slug })
       .from(articles)
       .where(and(eq(articles.status, 'published'), eq(articles.isBreaking, true)))
@@ -73,9 +88,36 @@ async function getHomeData() {
       .groupBy(categories.id, categories.name, categories.slug, categories.color)
       .orderBy(desc(sql`count(${articles.id})`))
       .limit(10),
+
+    db.select({
+      id: homeSections.id,
+      title: homeSections.title,
+      articleCount: homeSections.articleCount,
+      sortOrder: homeSections.sortOrder,
+      categoryId: homeSections.categoryId,
+      categorySlug: categories.slug,
+    })
+      .from(homeSections)
+      .leftJoin(categories, eq(homeSections.categoryId, categories.id))
+      .where(eq(homeSections.isActive, true))
+      .orderBy(asc(homeSections.sortOrder)),
   ])
 
-  return { breaking, featured, latest, cats }
+  const sectionArticles = await Promise.all(
+    sectionDefs.map(sec =>
+      db.select(ARTICLE_FIELDS)
+        .from(articles)
+        .leftJoin(categories, eq(articles.categoryId, categories.id))
+        .leftJoin(users, eq(articles.authorId, users.id))
+        .where(and(eq(articles.status, 'published'), eq(articles.categoryId, sec.categoryId)))
+        .orderBy(desc(articles.publishedAt))
+        .limit(sec.articleCount)
+    )
+  )
+
+  const sections = sectionDefs.map((sec, i) => ({ ...sec, articles: sectionArticles[i] }))
+
+  return { breaking, featured, latest, cats, sections }
 }
 
 function mapArticle(row: Record<string, unknown>): ArticleWithRelations {
@@ -104,7 +146,7 @@ function mapArticle(row: Record<string, unknown>): ArticleWithRelations {
 }
 
 export default async function HomePage() {
-  const { breaking, featured, latest, cats } = await getHomeData()
+  const { breaking, featured, latest, cats, sections } = await getHomeData()
   const featuredArticle = featured[0] ? mapArticle(featured[0] as unknown as Record<string, unknown>) : null
   const latestArticles = latest.map(r => mapArticle(r as unknown as Record<string, unknown>))
 
@@ -165,6 +207,26 @@ export default async function HomePage() {
             )}
           </aside>
         </div>
+
+        {sections.map(section => {
+          const mapped = section.articles.map(r => mapArticle(r as unknown as Record<string, unknown>))
+          if (mapped.length === 0) return null
+          return (
+            <div key={section.id} className={styles.categorySection}>
+              <div className={styles.sectionHeader}>
+                <h2 className={styles.sectionTitle}>{section.title}</h2>
+                {section.categorySlug && (
+                  <Link href={`/${section.categorySlug}`} className={styles.sectionLink}>View All</Link>
+                )}
+              </div>
+              <div className={styles.grid}>
+                {mapped.map((article) => (
+                  <ArticleCard key={article.id} article={article} priority={false} />
+                ))}
+              </div>
+            </div>
+          )
+        })}
       </div>
     </PublicLayout>
   )

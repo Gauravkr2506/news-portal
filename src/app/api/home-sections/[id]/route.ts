@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
 import { isAdmin } from '@/lib/dal'
@@ -31,6 +32,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     .returning()
 
   if (!updated) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  revalidatePath('/')
   return NextResponse.json(updated)
 }
 
@@ -40,5 +42,6 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
   const { id } = await params
 
   await db.delete(homeSections).where(eq(homeSections.id, Number(id)))
+  revalidatePath('/')
   return new NextResponse(null, { status: 204 })
 }

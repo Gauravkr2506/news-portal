@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
 import { isAdmin } from '@/lib/dal'
@@ -70,5 +71,6 @@ export async function POST(req: Request) {
     .leftJoin(categories, eq(homeSections.categoryId, categories.id))
     .where(eq(homeSections.id, section.id))
 
+  revalidatePath('/')
   return NextResponse.json(withCategory, { status: 201 })
 }

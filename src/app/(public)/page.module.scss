@@ -146,8 +146,6 @@
 
 // ─── Admin-configured category sections ───────────────────────────────────────
 .categorySection {
-  @include container;
-  padding-bottom: $space-10;
-  border-top: 1px solid var(--border);
   padding-top: $space-10;
+  border-top: 1px solid var(--border);
 }
