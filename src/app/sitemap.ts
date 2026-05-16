@@ -27,8 +27,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const staticRoutes: MetadataRoute.Sitemap = [
       { url: siteUrl, lastModified: new Date(), changeFrequency: 'hourly', priority: 1.0 },
-      { url: `${siteUrl}/login`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-      { url: `${siteUrl}/register`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
     ]
 
     const categoryRoutes: MetadataRoute.Sitemap = activeCategories.map((cat) => ({
@@ -57,7 +55,5 @@ function getFallbackSitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: siteUrl, lastModified: new Date(), changeFrequency: 'hourly', priority: 1.0 },
-    { url: `${siteUrl}/login`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${siteUrl}/register`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
   ]
 }
