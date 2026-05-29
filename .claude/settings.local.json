@@ -8,7 +8,9 @@
       "Bash(mv \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/page.tsx\" \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]/page.tsx\")",
       "Bash(mv \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/page.module.scss\" \"e:/claude-projects/news/news/src/app/\\(public\\)/author/[id]/[name]/page.module.scss\")",
       "Bash(node -e \"console.log\\(require\\('crypto'\\).randomUUID\\(\\).replace\\(/-/g,''\\)\\)\")",
-      "Bash(del \"e:\\\\claude-projects\\\\news\\\\news\\\\src\\\\app\\\\\\(public\\)\\\\page.tsx\")"
+      "Bash(del \"e:\\\\claude-projects\\\\news\\\\news\\\\src\\\\app\\\\\\(public\\)\\\\page.tsx\")",
+      "Bash(Get-ChildItem -Path \"e:\\\\claude-projects\\\\news\\\\news\\\\src\\\\app\" -Recurse -Filter \"page.tsx\")",
+      "Bash(Select-Object FullName)"
     ]
   }
 }
